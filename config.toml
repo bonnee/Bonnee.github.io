@@ -1,0 +1,21 @@
+baseURL = "https://bonnee.github.io/"
+languageCode = "en-us"
+title = "Bonnee's blog"
+theme = "anubis"
+
+[menu]
+
+  [[menu.main]]
+    identifier = "about"
+    name = "about"
+    url = "/about"
+
+  [[menu.main]]
+    identifier = "blog"
+    name = "blog"
+    url = "/blog"
+
+  [[menu.main]]
+    identifier = "projects"
+    name = "pojects"
+    url = "/projects"
