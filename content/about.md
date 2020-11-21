@@ -1,6 +1,5 @@
 ---
 title: "About"
-draft: false
 ---
 
 My name is Matteo Bonora, I'm a Computer Science student at [UniTrento](https://www.unitn.it/).

@@ -1,21 +1,36 @@
 baseURL = "https://bonnee.github.io/"
 languageCode = "en-us"
-title = "Bonnee's blog"
+title = "Bonnee's space"
 theme = "anubis"
 
 [menu]
-
   [[menu.main]]
     identifier = "about"
     name = "about"
     url = "/about"
-
-  [[menu.main]]
-    identifier = "blog"
-    name = "blog"
-    url = "/blog"
+    weight = 1
 
   [[menu.main]]
     identifier = "projects"
     name = "projects"
     url = "/projects"
+    weight = 2
+  
+  [[menu.main]]
+    identifier = "blog"
+    name = "blog"
+    url = "/blog"
+    weight = 3
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+
+[params]
+  author= "Matteo Bonora"
+  email= "bonora.matteo@gmail.com"
+  description= "Bonnee's space"
+  paginationSinglePost= false
+  style="dark-without-switcher"
+  readMore= false

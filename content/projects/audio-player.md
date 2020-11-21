@@ -1,7 +1,9 @@
 ---
 title: "Raspberry Pi audio player"
-date: 2015-07-22T00:00:00+01:00
+date: 2015-07-22
 draft: true
+categories: ["projects"]
+tags: ["raspberrypi", "hifi"]
 ---
 
 # TODO: insert pictures
