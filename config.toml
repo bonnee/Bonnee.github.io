@@ -28,6 +28,7 @@ theme = "anubis"
   tag = "tags"
 
 [params]
+  favicon="https://github.com/Bonnee.png?size=128"
   author= "Matteo Bonora"
   email= "bonora.matteo@gmail.com"
   description= "Bonnee's space"
