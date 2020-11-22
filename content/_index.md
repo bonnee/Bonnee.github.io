@@ -1,6 +1,5 @@
 ---
 title: "Welcome!"
-tags: ["index"]
 ---
 
 # Welcome!

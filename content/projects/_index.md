@@ -1,6 +1,5 @@
 ---
 title: "Projects"
-tags: ["index"]
 ---
 
 # Projects

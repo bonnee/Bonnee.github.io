@@ -179,6 +179,10 @@ hr {
     height: 1px;
 }
 
+.round img {
+    border-radius: 50%;
+}
+
 /* Header */
 
 header {

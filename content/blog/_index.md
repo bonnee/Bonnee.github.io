@@ -1,6 +1,5 @@
 ---
 title: "Blog"
-tags: ["index"]
 ---
 
 # Blog
