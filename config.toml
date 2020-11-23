@@ -35,3 +35,4 @@ theme = "anubis"
   paginationSinglePost= false
   style="dark-without-switcher"
   readMore= false
+  mainSections=["blog", "projects"]
