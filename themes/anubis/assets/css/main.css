@@ -469,6 +469,13 @@ ul.language-select > li, ul.footer-menu > li {
 
 /* Media Queries */
 
+@media screen and (min-width: 960px) {
+    html {
+        margin-left: calc(100vw - 100%);
+        margin-right: 0;
+    }
+}
+
 @media (max-width: 840px) {
     .main-wrapper {
         margin: 0;
