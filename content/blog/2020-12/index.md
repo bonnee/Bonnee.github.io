@@ -19,4 +19,4 @@ After a day that a snapshot has been taken, I want to remove it automatically so
 Overall I'm satisfied with the end result (a bit less with the procedure to make it work though), and unless my inbox gets full of failed action emails I will keep this automation going.
 
 Ah yes, here is the timelapse
-{{< video src="https://github.com/Bonnee/timelapse/raw/master/out.mp4" >}}
+{{< video src="https://github.com/Bonnee/timelapse/blob/master/out.mp4?raw=true" >}}

@@ -15,12 +15,43 @@ theme = "anubis"
     name = "projects"
     url = "/projects"
     weight = 2
-  
+
   [[menu.main]]
     identifier = "blog"
     name = "blog"
     url = "/blog"
     weight = 3
+
+  [[menu.main]]
+    identifier = "rss"
+    name = "rss"
+    url = "/index.xml"
+    weight = 4
+
+
+  [[menu.foot]]
+    identifier = "email"
+    name = "email"
+    url = "mailto:bonora.matteo@gmail.com"
+    weight = 1
+  
+  [[menu.foot]]
+    identifier = "github"
+    name = "github"
+    url = "https://github.com/Bonnee"
+    weight = 2
+  
+  [[menu.foot]]
+    identifier = "gitlab"
+    name = "gitlab"
+    url = "https://gitlab.com/bonnee"
+    weight = 3
+  
+  [[menu.foot]]
+    identifier = "linkedin"
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/matteo-bonora-748a6b1a8/"
+    weight = 4
 
 [taxonomies]
   category = "categories"
