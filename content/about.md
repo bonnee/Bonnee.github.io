@@ -1,7 +1,7 @@
 ---
 ---
 
-{{< figure src="https://github.com/Bonnee.png?size=250" alt="Profile Picture" class="round" >}}
+{{< figure src="https://github.com/Bonnee.png?size=250" width="250" height="250" alt="Profile Picture" class="round" >}}
 
 My name is Matteo Bonora, I'm a Computer Science student at [UniTrento](https://www.unitn.it/).
 
