@@ -2,6 +2,8 @@
 title: "Using GitHub Actions is like programming in the '60s"
 date: 2020-11-26T00:15:00+01:00
 draft: false
+categories: ["blog"]
+tags: ["github"]
 ---
 
 If you were lucky enough to have access to a computer in the 1960s you would have had to go through a convoluted process in order to run programs on it.\
