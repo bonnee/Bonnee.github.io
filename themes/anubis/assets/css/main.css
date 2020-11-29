@@ -132,6 +132,8 @@ thead {
 }
 
 table {
+    margin-left:auto;
+    margin-right:auto;
     max-width: 100%;
     border-spacing: 0;
 }
