@@ -71,7 +71,9 @@ A late addition is the power LED, which is soldered to the 3.3V line, with its r
 {{< figure src="top-view.jpg" alt="Top view of the open enclosure" caption="It wont win any beauty contest, but it works.">}}
 {{< figure src="enclosure-open.jpg" alt="Front view of the box" caption="The print quality is far from perfect, but this box will not be visible anyway.">}}
 
-The top cover is a thin sheet alluminium panel cut to dimension.
+The top cover is a thin sheet alluminium panel cut to dimension and screwed on top.
+
+{{< figure src="complete.jpg" alt="Front view of the box" caption="Here it is in all its uglyness." >}}
 
 ## Front Panel
 
