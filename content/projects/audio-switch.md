@@ -6,17 +6,18 @@ categories: ["projects"]
 tags: ["micro", "esp", "hifi", "home-automation"]
 ---
 
-The hifi system in my livingroom is based around an amplifier made in the '80s. There are a few audio sources connected to it:
+The HiFi system in my livingroom is centered around an amplifier from the '80s. There are a few audio sources connected to it:
 
 1. A television
 2. A Chromecast Audio
 3. A record player
 
-The amplifier is powered through a smart plug, that automatically turns it on when the TV or Music is started. Although nice and very convenient, this is not enough from keeping me from going all the way to the amplifier's front panel to select the right source, since it's changed quite often.
+The amplifier is powered through a smart plug that, through the power of [Home Assistant](https://www.home-assistant.io/), turns on whenever there is an active audio source and gets shut when there is none. Although nice and very convenient, this is not enough from keeping the listener from fiddling with the amplifier's switches to choose the right audio source, since it gets toggled quite often between the TV and the Chromecast.
 
-What this project aims to solve is the need to fiddle with the amplifier's inputs, except when I want to use the record player, since I already need to be close to it anyway.
+The ideal solution would be to automate the switch on the amplifier, but this requires some ugly mechanics around the switch, or an invasive internal modification. A simpler way to go is the use of a relay to phisically switch audio source when needed.
+To simplify the solution I decided to exclude the record player from the problem, since it is rarely used and it needs the listener to set the right volume on the amplifier anyway.
 
-Surprisingly enough, I didn't find any commercial solution to this problem. There are plenty of audio switchers on Amazon, but none of the is remotely controllable. However, there are a few DIY solutions out there. At the end I decided to make my own, basing my solution on [Wi-CASSS](https://www.hackster.io/govindanunni07/wifi-controlled-audio-source-selector-switch-wi-casss-d40ed3), a design made by Govindan Unni.
+Surprisingly enough, I didn't find any commercial audio switcher that meets my needs. There are plenty of audio switchers on Amazon, but none of them is controllable remotely. However, there are a few DIY solutions out there. At the end I decided to make my own, basing my solution on [Wi-CASSS](https://www.hackster.io/govindanunni07/wifi-controlled-audio-source-selector-switch-wi-casss-d40ed3), a design made by [Govindan Unni](https://www.hackster.io/govindanunni).
 
 I chose to go with a relay-based design because it's simple to make and gives the best audio insulation.
 
@@ -46,7 +47,7 @@ I chose to go with a relay-based design because it's simple to make and gives th
 | 5mm round LED         | 2   |
 | Momentary push button | 1   |
 
-After some shopping on AliExpress, the total cost amounted to almost 14 euros shipped (excluding LEDs and reistors), with lots of spare components.
+After some shopping on AliExpress, the total cost amounted to almost 14 euros shipped (excluding LEDs and reistors which I already have) including many spare components, enough to make at least two complete circuits.
 
 ## Schematics
 
@@ -67,7 +68,7 @@ Power comes from a micro-usb breakout board, external connections to the front p
 {{< figure src="usb-mount.jpg" caption="The micro-USB board is held in place with superglue and two copper pins (out of thick wire core).">}}
 
 After drilling the board, it's ready to be fit into the case. The circuit is secured using 2 screws; It was supposed to be three but a few drilling errors prevented that. The board still feels firm anyway.
-A late addition is the power LED, which is soldered to the 3.3V line, with its resistor on the wire, since it wasn't planned in my original design.
+A late addition to the circuit is the power LED, which is soldered to the 3.3V line, with its current-limiting resistor on the wire, since it wasn't planned in my original design.
 {{< figure src="top-view.jpg" alt="Top view of the open enclosure" caption="It wont win any beauty contest, but it works.">}}
 {{< figure src="enclosure-open.jpg" alt="Front view of the box" caption="The print quality is far from perfect, but this box will not be visible anyway.">}}
 
@@ -92,7 +93,7 @@ I designed a keycap to go on the switch along with a mounting for the front pane
 
 ## Software
 
-Instead of reinventing the wheel writing ESP8266 firmware, I just flashed [Tasmota](https://tasmota.github.io/docs/) on the ESP8266 and connected it to [Home Assistant](https://www.home-assistant.io/) through MQTT.
+Instead of reinventing the wheel writing custom ESP8266 firmware, I just flashed [Tasmota](https://tasmota.github.io/docs/) on the ESP-01 and linked it to [Home Assistant](https://www.home-assistant.io/) through MQTT.
 I then set up two simple automations to automatically toggle the inputs.
 
 `automations.yaml`:
