@@ -2,7 +2,11 @@
 title: "STM32 environment on Visual Studio Code"
 date: 2019-11-02
 draft: false
+categories: ["blog"]
+tags: ["dev", "micro", "stm32"]
 ---
+
+> Originally published on [GitHub Gists](https://gist.github.com/Bonnee/393c4be25d2e8620d9ec406073940d3a)
 
 This guide will help you install and setup Visual Studio Code for programming and debugging STM32 boards.
 
@@ -120,7 +124,3 @@ crw-rw----  1 user   group   4, 166 set 11 08:45 /dev/ttyACM0
 Now you just need to add your user to the group by doing `sudo usermod -aG group $USER`, substituting `group` with the group name you have discovered above.
 
 You are done. Log out of your account and log back in to apply the change.
-
----
-
-Originally posted on [GitHub Gists](https://gist.github.com/Bonnee/393c4be25d2e8620d9ec406073940d3a)

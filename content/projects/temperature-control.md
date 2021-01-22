@@ -8,7 +8,7 @@ tags: ["arduino", "micro", "pwm", "homelab"]
 
 # TODO: insert pictures
 
-This tutorial has originally been published on [Instructables](https://www.instructables.com/Temperature-Control-With-Arduino-and-PWM-Fans/)
+> Originally published on [Instructables](https://www.instructables.com/Temperature-Control-With-Arduino-and-PWM-Fans/)
 
 Temperature control with PID on Arduino and PWM fans for DIY server/network rack cooling.
 

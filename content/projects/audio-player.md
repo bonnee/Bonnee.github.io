@@ -3,10 +3,10 @@ title: "Raspberry Pi audio player"
 date: 2015-07-22
 draft: false
 categories: ["projects"]
-tags: ["raspberrypi", "hifi"]
+tags: ["hifi", "sbc", "raspberrypi"]
 ---
 
-This tutorial has originally been published on [Instructables](https://www.instructables.com/Raspberry-Pi-Media-Player/)
+> Originally published on [Instructables](https://www.instructables.com/Raspberry-Pi-Media-Player/)
 
 ![Player in its place](setup-angle.jpg)
 ![Complete box](complete-off.jpg)

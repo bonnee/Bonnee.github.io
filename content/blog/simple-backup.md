@@ -3,7 +3,7 @@ title: "How I back up my small servers"
 date: 2020-12-24T22:35:17+01:00
 draft: false
 categories: ["blog"]
-tags: ["sbc", "raspberrypi", "homelab"]
+tags: ["homelab", "sbc", "raspberrypi"]
 ---
 
 We all have heard about horror stories concerning SD card reliability when (mis)used as root disks on SBCs; With such a track record a good backup strategy should always be in place to prevent data loss and shorten downtime when a failure occurs. Fortunately I only had one MicroSD card casualty over the years, and the following backup method did its job right to recover from it.
