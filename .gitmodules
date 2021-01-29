@@ -1,15 +1,3 @@
-[submodule "themes/starter"]
-	path = themes/starter
-	url = https://github.com/jimfrenette/hugo-starter.git
-[submodule "themes/hugo-theme-basic"]
-	path = themes/hugo-theme-basic
-	url = https://github.com/siegerts/hugo-theme-basic.git
-[submodule "themes/anubis"]
-	path = themes/anubis
-	url = https://github.com/mitrichius/hugo-theme-anubis
-[submodule "themes/terminal"]
-	path = themes/terminal
-	url = https://github.com/panr/hugo-theme-terminal.git
 [submodule "themes/hugo-video"]
 	path = themes/hugo-video
 	url = https://github.com/martignoni/hugo-video.git
