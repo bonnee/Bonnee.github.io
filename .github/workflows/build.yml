@@ -16,4 +16,5 @@ jobs:
         DEPLOY_REPO: Bonnee/Bonnee.github.io
         DEPLOY_BRANCH: build
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        HUGO_ENV: production
         TZ: Europe/Rome
