@@ -8,11 +8,11 @@ tags: ["3d-printing"]
 
 [Thingiverse](https://www.thingiverse.com/) is becoming abandonware, which is extremely sad since it hosts countless useful 3D designs that can't be found anywhere else. Fortunately [some effort is being made](https://www.reddit.com/r/DataHoarder/search?q=thingiverse&restrict_sr=1) by the data hoarder community to backup Thingiverse in case it goes offline forever (or becomes even more broken).
 
-If you've recently uploaded something on Thingiverse, you might have realized that one of the most important features of the site, remixes, is [badly broken](https://www.reddit.com/r/thingiverse/search/?q=remix&restrict_sr=1). Together with the [terrible integrated search engine](https://www.reddit.com/r/thingiverse/search/?q=search&restrict_sr=1), it can be quite difficult to find stuff.
+If you've recently uploaded something on Thingiverse, you might have realized that one of the most important features of the site, remixes, is [badly broken](https://www.reddit.com/r/thingiverse/search/?q=remix&restrict_sr=1). Together with the [terrible integrated search engine](https://www.reddit.com/r/thingiverse/search/?q=search&restrict_sr=1), it becomes quite difficult to find stuff.
 
 {{< figure src="box.png" caption="I'm sure I've seen boxes on Thingiverse before." >}}
 
-If you try to upload a remixed desing on thingiverse, you will find that it's not possible to link the original source thing as a remix, or at least it doesn't work for me, and many others. This is bad because your thing will not come up under the "Remixes" tab in the page of the original thing, making it less discoverable. Not to mention the missing attribution to the original work.
+If you try to upload a remixed design on thingiverse, you will find that it's not possible to link the original source thing as a remix, or at least it doesn't work for me, and many others. This is bad because your thing will not come up under the "Remixes" tab in the page of the original thing, making it less discoverable. Not to mention the missing attribution to the original work.
 
 {{< figure src="3dbenchy.png" caption="Even 3DBenchy doesn't exist." >}}
 
