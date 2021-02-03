@@ -1,4 +1,5 @@
 ---
+rss_ignore: true
 ---
 
 {{< figure src="https://github.com/Bonnee.png?size=250" width="250" height="250" alt="Profile Picture" class="round" >}}

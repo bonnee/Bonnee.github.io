@@ -1,5 +1,6 @@
 ---
-title: "Welcome!"
+#title: "Welcome!"
+rss_ignore: true
 ---
 
 # Welcome!
