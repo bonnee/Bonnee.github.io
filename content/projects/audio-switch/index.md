@@ -4,6 +4,8 @@ date: 2020-11-29T09:50:13+01:00
 draft: false
 categories: ["projects"]
 tags: ["home-automation", "hifi", "micro", "esp"]
+images:
+  - "complete.jpg"
 ---
 
 The HiFi system in my livingroom is centered around an amplifier from the '80s. There are a few audio sources connected to it:
