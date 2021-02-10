@@ -22,21 +22,21 @@ Try not to keep your designs on Thingiverse alone. There are [plenty](https://ww
 I keep all my designs in a git repository on [GitHub](https://github.com/Bonnee/3d-models) and I'm trying out [PrusaPrinters](https://www.prusaprinters.org/social/56277-bonnee/prints) as a Thingiverse replacement.
 
 ### 1. Use the "Remix It" button
-If you are trying to create a new page for a remix, and you only need to link a single source, just use the "Remix it" menu from the source's page. The upload page should come up with the remix sources already filled in.
+If you are creating a new thing just use the "Remix it" menu from the source's page. The upload page should come up with the remix sources already filled in.
 
 {{< figure src="remix-it.png" caption="As simple as that." >}}
-This is good if you are uploading a new thing, but what if you already have a thing that has the remix sources missing? or what if you want to reference more than one remix source in your thing? If this is your case, keep reading.
+This works well if you are uploading a new thing, but what if you already have an uploaded design and want to add a remix source to that? or what if you want to reference more than one remix source on your design? If this is your case, keep reading.
 
 ### 2. HTML hackery
 You can edit the HTML code on Thingiverse's edit page to manually include remixes. Here's how.
 > Screenshots are taken from Firefox, but the procedure on Chromium-based browsers is identical.
 
-First, create a new thing using [workaround 1](#1-use-the-remix-it-button).  
-If you already have a thing and just want to add a remix source, go to its edit page and select "This is a Remix".
-Now in the edit page you should see something like this.
+First, open the edit page of the thing you want to add remixes to. (create a new thing using [workaround 1](#1-use-the-remix-it-button) or just edit an existing design). If the thing you're editing doesen't have a remix source, select "This is a Remix".  
+Now in the edit page you should see something like this:
 
 {{< figure src="thing.png" caption="Just right click on the name." >}}
-The trick consists in manually adding the entry for other remix sources. To do that you can right-click on your first remix source and select "Inspect Element". You will now see the HTML code of the element you clicked on. If you don't have any remixes to click on to, just right click on the placeholder text that's in its place.
+The trick consists of manually inserting the HTML form entry for remix sources. To do that you can right-click inside the "Remix Source Files" box and select "Inspect Element" from the menu. You will now see the HTML code of the element you clicked on.  
+If you don't have any remixes to click on, just right click on the placeholder text that's in its place.
 
 {{< figure src="source.png" caption="You enetered the matrix now." >}}
 
@@ -44,7 +44,7 @@ Now you need to look around for a line similar to this one:
 ```
 <input type="hidden" name="sources[xxxxxxx]" value="xxxxxxx">
 ```
-If you can't find it don't worry. Just select any line close to the highlighted one.
+If you can't find it don't worry. Just select any line.  
 right-click on it and select "Edit As HTML". A textbox containing that line should appear.
 {{< figure src="html-edit.png" caption="Double check what you're doing here to avoid confusion later." >}}
 Duplicate the original line and substitute the numbers in the `name` and `value` properties with the thing id of the thing you want to remix. The thing id is the last part of the URL of the thing's page.
