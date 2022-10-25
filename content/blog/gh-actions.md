@@ -1,7 +1,7 @@
 ---
 title: "Using GitHub Actions is like programming in the '60s"
 date: 2020-11-26T00:15:00+01:00
-draft: false
+draft: true
 categories: ["blog"]
 tags: ["github"]
 ---
