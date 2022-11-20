@@ -80,3 +80,4 @@ enableRobotsTXT = true
   style="auto-without-switcher"
   readMore= false
   mainSections=["blog", "projects"]
+  me="https://mstdn.social/@bonny"
