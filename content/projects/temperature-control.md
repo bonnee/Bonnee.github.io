@@ -3,7 +3,7 @@ title: "Temperature control with Arduino and PWM fans"
 date: 2017-02-23
 draft: true
 categories: ["projects"]
-tags: ["arduino", "micro", "pwm", "homelab"]
+tags: ["micro", "arduino", "pwm", "homelab"]
 ---
 
 # TODO: insert pictures
