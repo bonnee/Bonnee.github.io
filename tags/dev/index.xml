@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on Bonnee's space</title><link>https://www.bonnee.me/tags/dev/</link><description>A personal blog for projects and thoughts (Dev)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 02 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://www.bonnee.me/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>STM32 environment on Visual Studio Code</title><link>https://www.bonnee.me/blog/stm32-vscode/</link><pubDate>Sat, 02 Nov 2019 00:00:00 +0000</pubDate><guid>https://www.bonnee.me/blog/stm32-vscode/</guid><description>&lt;blockquote>
+&lt;p>Originally published on &lt;a href="https://gist.github.com/Bonnee/393c4be25d2e8620d9ec406073940d3a">GitHub Gists&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>This page will help you setup Visual Studio Code for programming and debugging STM32 boards using STM32CubeMX projects.&lt;/p>
+&lt;p>I tested this guide under Arch Linux and Ubuntu 18.04. If you get it to work under other setups please let me know so that I can update the steps with more info.&lt;/p>
+&lt;h2 id="warning">Warning&lt;/h2>
+&lt;p>If you were using STM32CubeIDE or SystemWorkbench before, you need to convert your projects in order for them to work. The conversion procedure is fully reversible.&lt;!-- raw HTML omitted -->
+Up until the time of writing this guide, it is not possible to use STM32CubeIDE and Visual Studio Code on the same project unless some configuration changes are made on CubeIDE.
+Besides that, it is recommended that every person that works on a project runs the same working environment.&lt;/p>
+&lt;h1 id="installation">Installation&lt;/h1>
+&lt;h2 id="steps">Steps&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#1-stm32cubemx">STM32CubeMX&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#2-gnu-arm-embedded-toolchain">GNU ARM Embedded Toolchain&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#3-make">Make&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#4-openocd">OpenOCD&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#5-visual-studio-code">Visual Studio Code&lt;/a>
+&lt;ol>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#51-cc-extension">C/C++ Extension&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#52-stm32-for-vscode-extension">stm32-for-vscode Extension&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="1-stm32cubemx">1. STM32CubeMX&lt;/h2>
+&lt;p>If you already have CubeMX installed, you can skip this step.&lt;/p>
+&lt;h4 id="arch-linux">Arch Linux&lt;/h4>
+&lt;p>Install &lt;code>stm32cubemx&lt;/code> from the &lt;a href="https://wiki.archlinux.org/index.php/Arch_User_Repository">AUR&lt;/a>. If you don&amp;rsquo;t have access to the AUR or you just don&amp;rsquo;t want to use it, follow the step below.&lt;/p>
+&lt;h4 id="inferior-operating-systems-windows-ubuntu-temple-os">Inferior operating systems (Windows, Ubuntu, Temple OS&amp;hellip;)&lt;/h4>
+&lt;p>Download the .zip from &lt;a href="https://www.st.com/en/development-tools/stm32cubemx.html">here&lt;/a> (you have to sign up to ST&amp;rsquo;s website) and install the right version for your OS.&lt;/p>
+&lt;hr>
+&lt;h2 id="2-gnu-arm-embedded-toolchain">2. GNU ARM Embedded Toolchain&lt;/h2>
+&lt;p>These are the tools needed to compile and debug the code.&lt;/p>
+&lt;h3 id="arch-linux-1">Arch Linux&lt;/h3>
+&lt;p>Install &lt;code>arm-none-eabi-gcc&lt;/code> &lt;code>arm-none-eabi-gdb&lt;/code> &lt;code>arm-none-eabi-newlib&lt;/code>.&lt;/p>
+&lt;h3 id="debianubuntu">Debian/Ubuntu&lt;/h3>
+&lt;p>Install &lt;code>gcc-arm-none-eabi&lt;/code> &lt;code>gdb-multiarch&lt;/code> &lt;code>libnewlib-arm-none-eabi&lt;/code>.&lt;/p>
+&lt;h3 id="windows">Windows&lt;/h3>
+&lt;p>Install the toolchain from &lt;a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">ARM&amp;rsquo;s website&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h2 id="3-make">3. Make&lt;/h2>
+&lt;h3 id="linux">Linux&lt;/h3>
+&lt;p>Install &lt;code>make&lt;/code> from your package manager.&lt;/p>
+&lt;h3 id="windows-1">Windows&lt;/h3>
+&lt;p>Install make from this &lt;a href="http://gnuwin32.sourceforge.net/packages/make.htm">this&lt;/a> page (updated in 2006 though&amp;hellip;).
+It should be possible to get the current version of make through &lt;a href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">WSL&lt;/a>, but I don&amp;rsquo;t have experience with it.&lt;/p>
+&lt;hr>
+&lt;h2 id="4-openocd">4. OpenOCD&lt;/h2>
+&lt;p>Open On-Chip Debugger is the interface between your computer and the programmer. It will take care of uploading the compiled software to the STM32 and during debug it will open the connection between the computer and the STM32.&lt;!-- raw HTML omitted -->&lt;/p>
+&lt;h3 id="linux-1">Linux&lt;/h3>
+&lt;p>Install &lt;code>openocd&lt;/code> from your package manager.&lt;/p>
+&lt;p>&lt;strong>Warning&lt;/strong>: for some newer microcontrollers and programmers you might need to build OpenOCD from sources, especially if your distro doesn&amp;rsquo;t ship the latest version.&lt;/p>
+&lt;h3 id="windows-2">Windows&lt;/h3>
+&lt;p>I received feedback about &lt;a href="https://xpack.github.io/openocd/install/">xPack OpenOCD&lt;/a> working fine with this setup.&lt;/p>
+&lt;hr>
+&lt;h2 id="5-visual-studio-code">5. Visual Studio Code&lt;/h2>
+&lt;p>The next steps aren&amp;rsquo;t really necessary to get the thing working. You could just use a shell and your favorite editor and you would have (almost) all the functionality of the complete setup. Visual Studio Code is just a pretty front-end.&lt;/p>
+&lt;h3 id="linux-2">Linux&lt;/h3>
+&lt;p>&lt;a href="https://code.visualstudio.com/docs/setup/linux">The official linux page&lt;/a> contains the instructions to install the latest version of VSCode on many distributions.&lt;/p>
+&lt;h3 id="windows-3">Windows&lt;/h3>
+&lt;p>Download and install the program from the &lt;a href="https://code.visualstudio.com/">official website&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h3 id="51-cc-extension">5.1. C/C++ Extension&lt;/h3>
+&lt;p>This extension will take care of intellisense, syntax highlighting and more.&lt;!-- raw HTML omitted -->
+Install &lt;a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">this&lt;/a> extension in Visual Studio Code.&lt;/p>
+&lt;h3 id="52-stm32-for-vscode-extension">5.2. stm32-for-vscode Extension&lt;/h3>
+&lt;p>Same as above, but with &lt;a href="https://marketplace.visualstudio.com/items?itemName=bmd.stm32-for-vscode">this&lt;/a> extension.&lt;/p>
+&lt;h1 id="configuration">Configuration&lt;/h1>
+&lt;h2 id="1-stm32cubemx-1">1. STM32CubeMX&lt;/h2>
+&lt;p>By default CubeMX generates projects in a format called EWARM. Unfortunately, EWARM is currently not supported by the VSCode extension, but the more generic Makefile structure is. In order to configure CubeMX to support VSCode you have to navigate to &lt;code>Project Manager-&amp;gt;Project-&amp;gt;Toolchain/IDE&lt;/code> and set it to Makefile.&lt;/p>
+&lt;p>If you don&amp;rsquo;t want your STM32Cube library path being spammed all over the makefile (if you need to share the project with someone else for example) you can tell CubeMX to copy the necessary files to the project&amp;rsquo;s directory and link the makefile to them. The option is located in &lt;code>Project Manger-&amp;gt;Code Generator-&amp;gt;STM32Cube MCU packages and embedded software packs&lt;/code>.&lt;/p>
+&lt;p>After CubeMX setup you can click on &lt;code>GENERATE CODE&lt;/code>; the new Makefile project structure should get created.&lt;/p>
+&lt;hr>
+&lt;h2 id="2-visual-studio">2. Visual Studio&lt;/h2>
+&lt;p>Using the &lt;code>Open folder&lt;/code> menu in Visual Studio Code, navigate to your project&amp;rsquo;s root folder and open it.
+Now open the command palette (&lt;code>Ctrl+Shift+P&lt;/code> or &lt;code>F1&lt;/code>) and run &lt;code>Build clean STM32 project&lt;/code>. A terminal should appear and you will see gcc (hopefully) building your project.&lt;/p>
+&lt;hr>
+&lt;h1 id="usage">Usage&lt;/h1>
+&lt;h2 id="compiling--flashing">Compiling &amp;amp; Flashing&lt;/h2>
+&lt;p>After you call &lt;code>Build STM32 Project&lt;/code> for the first time, stm32-for-vscode will create two custom tasks (that can be accessed by typing &lt;code>Ctrl+Shift+B&lt;/code>) to build your code and to flash it into the STM32 board.&lt;/p>
+&lt;h2 id="debugging">Debugging&lt;/h2>
+&lt;p>To debug the code just press &lt;code>F5&lt;/code> inside VSCode and the debugger will start automatically. Remember to stop the debugger before flashing new code.&lt;/p>
+&lt;h1 id="troubleshooting">Troubleshooting&lt;/h1>
+&lt;h3 id="error-libusb_open-failed-with-libusb_error_access-during-upload">&lt;code>Error: libusb_open() failed with LIBUSB_ERROR_ACCESS&lt;/code> during upload&lt;/h3>
+&lt;p>This happnes because you don&amp;rsquo;t have permission to open the serial device. In order to fix this you need to add your user to the group that owns the serial interface. To get the serial interface name you can run &lt;code>dmesg | grep tty&lt;/code> after plugging the STM32 in. Read the last line, you should see something like:&lt;/p>
+&lt;pre tabindex="0">&lt;code>cdc_acm 2-2:1.2: ttyACM0: USB ACM device
+&lt;/code>&lt;/pre>&lt;p>In this example &lt;code>ttyACM0&lt;/code> is the device name.&lt;!-- raw HTML omitted -->
+Now that you know the name you can get the owner by doing &lt;code>ls -l /dev/ttyACM0&lt;/code>. The output looks like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code>crw-rw---- 1 user group 4, 166 set 11 08:45 /dev/ttyACM0
+&lt;/code>&lt;/pre>&lt;p>&lt;code>group&lt;/code> indicates the group name.&lt;/p>
+&lt;p>Now you just need to add your user to the group by doing &lt;code>sudo usermod -aG group $USER&lt;/code>, substituting &lt;code>group&lt;/code> with the group name you have discovered above.&lt;/p>
+&lt;p>You are done. Log out of your account and log back in to apply the change.&lt;/p></description></item></channel></rss>

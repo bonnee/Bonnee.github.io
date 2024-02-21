@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>3d-Printing on Bonnee's space</title><link>https://www.bonnee.me/tags/3d-printing/</link><description>A personal blog for projects and thoughts (3d-Printing)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 Feb 2021 12:13:00 +0100</lastBuildDate><atom:link href="https://www.bonnee.me/tags/3d-printing/index.xml" rel="self" type="application/rss+xml"/><item><title>Thingiverse's Remix function is broken. Here's how to fix it</title><link>https://www.bonnee.me/blog/thingiverse-remixes-fix/</link><pubDate>Mon, 01 Feb 2021 12:13:00 +0100</pubDate><guid>https://www.bonnee.me/blog/thingiverse-remixes-fix/</guid><description>&lt;p>&lt;a href="https://www.thingiverse.com/">Thingiverse&lt;/a> is becoming abandonware, which is extremely sad since it hosts countless useful 3D designs that can&amp;rsquo;t be found anywhere else. Fortunately &lt;a href="https://www.reddit.com/r/DataHoarder/search?q=thingiverse&amp;amp;restrict_sr=1">some effort is being made&lt;/a> by the data hoarder community to backup Thingiverse in case it goes offline forever (or becomes even more broken).&lt;/p>
+&lt;p>If you&amp;rsquo;ve recently uploaded something on Thingiverse, you might have realized that one of the most important features of the site, remixes, is &lt;a href="https://www.reddit.com/r/thingiverse/search/?q=remix&amp;amp;restrict_sr=1">badly broken&lt;/a>. Together with the &lt;a href="https://www.reddit.com/r/thingiverse/search/?q=search&amp;amp;restrict_sr=1">terrible integrated search engine&lt;/a>, it becomes quite difficult to find stuff.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/box.png"
+alt="I&amp;amp;rsquo;m sure I&amp;amp;rsquo;ve seen boxes on Thingiverse before."/>&lt;figcaption>
+&lt;p>I&amp;rsquo;m sure I&amp;rsquo;ve seen boxes on Thingiverse before.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;p>If you try to upload a remixed design on thingiverse, you will find that it&amp;rsquo;s not possible to link the original source thing as a remix, or at least it doesn&amp;rsquo;t work for me, and many others. This is bad because your thing will not come up under the &amp;ldquo;Remixes&amp;rdquo; tab in the page of the original thing, making it less discoverable. Not to mention the missing attribution to the original work.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/3dbenchy.png"
+alt="Even 3DBenchy doesn&amp;amp;rsquo;t exist."/>&lt;figcaption>
+&lt;p>Even 3DBenchy doesn&amp;rsquo;t exist.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;h1 id="workarounds">Workarounds&lt;/h1>
+&lt;h2 id="0-upload-to-other-services">0. Upload to other services&lt;/h2>
+&lt;p>Try not to keep your designs on Thingiverse alone. There are &lt;a href="https://www.prusaprinters.org/">plenty&lt;/a> of &lt;a href="https://www.myminifactory.com">better&lt;/a> &lt;a href="https://cults3d.com">working&lt;/a> &lt;a href="https://pinshape.com/">alternative&lt;/a> &lt;a href="https://www.cgtrader.com/">platforms&lt;/a> to choose from.&lt;br>
+I keep all my designs in a git repository on &lt;a href="https://github.com/Bonnee/3d-models">GitHub&lt;/a> and I&amp;rsquo;m trying out &lt;a href="https://www.prusaprinters.org/social/56277-bonnee/prints">PrusaPrinters&lt;/a> as a Thingiverse replacement.&lt;/p>
+&lt;h3 id="1-use-the-remix-it-button">1. Use the &amp;ldquo;Remix It&amp;rdquo; button&lt;/h3>
+&lt;p>If you are creating a new thing just use the &amp;ldquo;Remix it&amp;rdquo; menu from the source&amp;rsquo;s page. The upload page should come up with the remix sources already filled in.&lt;/p>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/remix-it.png"
+alt="As simple as that."/>&lt;figcaption>
+&lt;p>As simple as that.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+This works well if you are uploading a new thing, but what if you already have an uploaded design and want to add a remix source to that? or what if you want to reference more than one remix source on your design? If this is your case, keep reading.&lt;/p>
+&lt;h3 id="2-html-hackery">2. HTML hackery&lt;/h3>
+&lt;p>You can edit the HTML code on Thingiverse&amp;rsquo;s edit page to manually include remixes. Here&amp;rsquo;s how.&lt;/p>
+&lt;blockquote>
+&lt;p>Screenshots are taken from Firefox, but the procedure on Chromium-based browsers is identical.&lt;/p>
+&lt;/blockquote>
+&lt;p>First, open the edit page of the thing you want to add remixes to. (create a new thing using &lt;a href="https://www.bonnee.me/blog/thingiverse-remixes-fix/#1-use-the-remix-it-button">workaround 1&lt;/a> or just edit an existing design). If the thing you&amp;rsquo;re editing doesen&amp;rsquo;t have a remix source, select &amp;ldquo;This is a Remix&amp;rdquo;.&lt;br>
+Now in the edit page you should see something like this:&lt;/p>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/thing.png"
+alt="Just right click on the name."/>&lt;figcaption>
+&lt;p>Just right click on the name.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+The trick consists of manually inserting the HTML form entry for remix sources. To do that you can right-click inside the &amp;ldquo;Remix Source Files&amp;rdquo; box and select &amp;ldquo;Inspect Element&amp;rdquo; from the menu. You will now see the HTML code of the element you clicked on.&lt;br>
+If you don&amp;rsquo;t have any remixes to click on, just right click on the placeholder text that&amp;rsquo;s in its place.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/source.png"
+alt="You enetered the matrix now."/>&lt;figcaption>
+&lt;p>You enetered the matrix now.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;p>Now you need to look around for a line similar to this one:&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;input type=&amp;#34;hidden&amp;#34; name=&amp;#34;sources[xxxxxxx]&amp;#34; value=&amp;#34;xxxxxxx&amp;#34;&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>If you can&amp;rsquo;t find it don&amp;rsquo;t worry. Just select any line.&lt;br>
+right-click on it and select &amp;ldquo;Edit As HTML&amp;rdquo;. A textbox containing that line should appear.
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/html-edit.png"
+alt="Double check what you&amp;amp;rsquo;re doing here to avoid confusion later."/>&lt;figcaption>
+&lt;p>Double check what you&amp;rsquo;re doing here to avoid confusion later.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+Duplicate the original line and substitute the numbers in the &lt;code>name&lt;/code> and &lt;code>value&lt;/code> properties with the thing id of the thing you want to remix. The thing id is the last part of the URL of the thing&amp;rsquo;s page.
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/thing-id.png"/>
+&lt;/figure>
+&lt;/p>
+&lt;p>When you&amp;rsquo;re done editing and everything looks good, click away from the textbox area to confirm the changes and go ahead and save your thing. Hopefully the right sources should be linked now and life will be good again.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/done.png"
+alt="Done!"/>&lt;figcaption>
+&lt;p>Done!&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;p>You can repeat these steps indefinitely to add as many remixes as you want.&lt;/p></description></item></channel></rss>

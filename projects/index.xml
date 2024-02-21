@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Projects on Bonnee's space</title><link>https://www.bonnee.me/projects/</link><description>A personal blog for projects and thoughts (Projects)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 29 Nov 2020 09:50:13 +0100</lastBuildDate><atom:link href="https://www.bonnee.me/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>Two channel audio source switch with Wi-Fi</title><enclosure url="https://www.bonnee.me/projects/audio-switch/complete.jpg" type="image/jpg"/><link>https://www.bonnee.me/projects/audio-switch/</link><pubDate>Sun, 29 Nov 2020 09:50:13 +0100</pubDate><guid>https://www.bonnee.me/projects/audio-switch/</guid><description>&lt;p>The HiFi system in my livingroom is centered around an amplifier from the &amp;rsquo;80s. There are a few audio sources connected to it:&lt;/p>
+&lt;ol>
+&lt;li>A television&lt;/li>
+&lt;li>A Chromecast Audio&lt;/li>
+&lt;li>A record player&lt;/li>
+&lt;/ol>
+&lt;p>The amplifier is powered through a smart plug that, through the power of &lt;a href="https://www.home-assistant.io/">Home Assistant&lt;/a>, turns on whenever there is an active audio source and gets shut when there is none. Although nice and very convenient, this is not enough from keeping the listener from fiddling with the amplifier&amp;rsquo;s switches to choose the right audio source, since it gets toggled quite often between the TV and the Chromecast.&lt;/p>
+&lt;p>The ideal solution would be to automate the switch on the amplifier, but this requires some ugly mechanics around the switch, or an invasive internal modification. A simpler way to go is the use of a relay to phisically switch audio source when needed.
+To simplify the solution I decided to exclude the record player from the problem, since it is rarely used and it needs the listener to set the right volume on the amplifier anyway.&lt;/p>
+&lt;p>Surprisingly enough, I didn&amp;rsquo;t find any commercial audio switcher that meets my needs. There are plenty of audio switchers on Amazon, but none of them is controllable remotely. However, there are a few DIY solutions out there. At the end I decided to make my own, basing my solution on &lt;a href="https://www.hackster.io/govindanunni07/wifi-controlled-audio-source-selector-switch-wi-casss-d40ed3">Wi-CASSS&lt;/a>, a design made by &lt;a href="https://www.hackster.io/govindanunni">Govindan Unni&lt;/a>.&lt;/p>
+&lt;p>I chose to go with a relay-based design because it&amp;rsquo;s simple to make and gives the best audio insulation.&lt;/p>
+&lt;h2 id="bom">BOM&lt;/h2>
+&lt;h3 id="main-circuit">Main circuit&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Item&lt;/th>
+&lt;th>Qty&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>ESP8266 ESP-01s&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>OMRON G6S-2 (5V) signal relay&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Panel 3.5 mm Stereo jacks&lt;/td>
+&lt;td>3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>1N4007 diode&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Micro USB breakout board&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>5V to 3.3V AMS1117 breakout board&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>BC547 transistor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>1 kΩ resistor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>220 Ω resistor&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>5mm round LED&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10µf capacitor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>100µf capacitor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="front-panel">Front panel&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Item&lt;/th>
+&lt;th>Qty&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>5mm round LED&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Momentary push button&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>After some shopping on AliExpress, the total cost amounted to almost 14 euros shipped (excluding LEDs and reistors which I already have) including many spare components, enough to make at least two complete circuits.&lt;/p>
+&lt;h2 id="schematics">Schematics&lt;/h2>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/original-schematic.jpg"
+alt="Original schematic."/>&lt;figcaption>
+&lt;p>Original schematic.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+I redesigned the relay driver circuit to include status LEDs for each input and also simplified it a bit. &lt;a href="https://bit.ly/wifiaudioswitch">Here&lt;/a> is a circuitjs link for the relay driver schematic. The ESP8266 power circuit has been maintained identical to Wi-CASSS&amp;rsquo;s schematic.
+&lt;figure>&lt;a href="https://bit.ly/wifiaudioswitch">&lt;img src="https://www.bonnee.me/projects/audio-switch/relay-driver.jpg"
+alt="Redesigned relay driver circuit."/>&lt;/a>&lt;figcaption>
+&lt;p>Redesigned relay driver circuit.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>I realized the circuit on perfboard since it&amp;rsquo;s quick and easy to make circuits out of.
+In the following picture you can see and early attempt at placing the components. This first try still used the original Wi-CASSS&amp;rsquo;s schematic (as you can see by the extra diode in the top left corner of the picture).
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/drawing.jpg"
+alt="Early components placement prototype."/>&lt;figcaption>
+&lt;p>Early components placement prototype.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;h2 id="enclosure">Enclosure&lt;/h2>
+&lt;p>I decided to design and 3D print my own enclosure. I didn&amp;rsquo;t want to have dangling wires coming out of it, so all external peripherals are detachable.&lt;/p>
+&lt;p>Power comes from a micro-usb breakout board, external connections to the front panels are handled by a small perfboard with pin headers. To hold all the connectors in place I designed the enclosure with supports and holes to handle that.
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/supports.jpg"
+alt="Supports in CAD vs IRL."/>&lt;figcaption>
+&lt;p>Supports in CAD vs IRL.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/usb-mount.jpg"
+alt="The micro-USB board is held in place with superglue and two copper pins (out of thick wire core)."/>&lt;figcaption>
+&lt;p>The micro-USB board is held in place with superglue and two copper pins (out of thick wire core).&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>After drilling the board, it&amp;rsquo;s ready to be fit into the case. The circuit is secured using 2 screws; It was supposed to be three but a few drilling errors prevented that. The board still feels firm anyway.
+A late addition to the circuit is the power LED, which is soldered to the 3.3V line, with its current-limiting resistor on the wire, since it wasn&amp;rsquo;t planned in my original design.
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/top-view.jpg"
+alt="Top view of the open enclosure"/>&lt;figcaption>
+&lt;p>It wont win any beauty contest, but it works.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/enclosure-open.jpg"
+alt="Front view of the box"/>&lt;figcaption>
+&lt;p>The print quality is far from perfect, but this box will not be visible anyway.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>The top cover is a thin sheet alluminium panel cut to dimension and screwed on top.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/complete.jpg"
+alt="Front view of the box"/>&lt;figcaption>
+&lt;p>Here it is in all its uglyness.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;h2 id="front-panel-1">Front Panel&lt;/h2>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel_cad.jpg"
+alt="Front panel CAD."/>&lt;figcaption>
+&lt;p>Front panel CAD.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel.jpg"
+alt="Front panel completed and mounted."/>&lt;figcaption>
+&lt;p>Front panel completed and mounted.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/button-bottom.jpg"
+alt="The button"/>&lt;figcaption>
+&lt;p>It&amp;rsquo;s incredible how cheap these buttons are while still feeling pretty good.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>The front panel is the local interface to the switch. It contains a momentary push-button to toggle input and two press-fitted LEDs that indicate the selected one.&lt;br>
+The button I used came from a PC front panel power button. Searching online for &amp;ldquo;pc power switch&amp;rdquo; I found it is produced by many manufacturers and can be found for just a few cents.
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel-back_cad.jpg"
+alt="Front panel&amp;amp;rsquo;s back side. Here you can see the button retainer clip."/>&lt;figcaption>
+&lt;p>Front panel&amp;rsquo;s back side. Here you can see the button retainer clip.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel-nocap.jpg"
+alt="Front panel without the keycap."/>&lt;figcaption>
+&lt;p>Front panel without the keycap.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>I designed a keycap to go on the switch along with a mounting for the front panel. Since I am sort of a keyboard nerd, the black legend is actually 3D-printed by first printing the legend, which is just a single layer thick, then the filament is swapped while the bed is kept hot, and the rest of the cap is printed.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/keycap.jpg"
+alt="Back of the keycap with stem and it&amp;amp;rsquo;s reinforcement. It&amp;amp;rsquo;s a miniature keyboard keycap basically. So cute."/>&lt;figcaption>
+&lt;p>Back of the keycap with stem and it&amp;rsquo;s reinforcement. It&amp;rsquo;s a miniature keyboard keycap basically. So cute.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;h2 id="software">Software&lt;/h2>
+&lt;p>Instead of reinventing the wheel writing custom ESP8266 firmware, I just flashed &lt;a href="https://tasmota.github.io/docs/">Tasmota&lt;/a> on the ESP-01 and linked it to &lt;a href="https://www.home-assistant.io/">Home Assistant&lt;/a> through MQTT.
+I then set up two simple automations to automatically toggle the inputs.&lt;/p>
+&lt;p>&lt;code>automations.yaml&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>alias: Switch to Chromecast Audio
+description: Switch audio source to Chromecast Audio
+trigger:
+- entity_id: binary_sensor.chromecast_audio_status
+platform: state
+to: &amp;#39;on&amp;#39;
+- entity_id: binary_sensor.tv_status
+platform: state
+to: &amp;#39;off&amp;#39;
+condition:
+- condition: state
+entity_id: binary_sensor.chromecast_audio_status
+state: &amp;#39;on&amp;#39;
+- condition: state # Don&amp;#39;t switch to Chromecast Audio if TV is on
+entity_id: binary_sensor.tv_status
+state: &amp;#39;off&amp;#39;
+action:
+- service: switch.turn_on
+entity_id: switch.audio_switch
+mode: single
+alias: Switch to TV
+description: Switch audio source to TV
+trigger:
+- entity_id: binary_sensor.chromecast_audio_status
+platform: state
+to: &amp;#39;off&amp;#39;
+- entity_id: binary_sensor.tv_status
+platform: state
+to: &amp;#39;on&amp;#39;
+condition:
+- condition: state
+entity_id: binary_sensor.tv_status
+state: &amp;#39;on&amp;#39;
+action:
+- service: switch.turn_off
+entity_id: switch.audio_switch
+- service: media_player.turn_off # Turn off other speaker if TV is on
+entity_id: media_player.other_speaker
+mode: single
+&lt;/code>&lt;/pre>&lt;h2 id="conclusions">Conclusions&lt;/h2>
+&lt;p>I&amp;rsquo;ve been using the switch for a couple of weeks without a single issue. Audio quality has not changed and it is very convenient to not touch the amplifier anymore. I will see how long the relay contacts hold up, but for the time being it&amp;rsquo;s working perfectly.&lt;/p>
+&lt;p>&lt;a href="https://github.com/Bonnee/wifi-audio-switch">Here&amp;rsquo;s&lt;/a> the repository with all the 3D models, pictures and schematics.&lt;/p></description></item><item><title>Raspberry Pi audio player</title><link>https://www.bonnee.me/projects/audio-player/</link><pubDate>Wed, 22 Jul 2015 00:00:00 +0000</pubDate><guid>https://www.bonnee.me/projects/audio-player/</guid><description>&lt;blockquote>
+&lt;p>Originally published on &lt;a href="https://www.instructables.com/Raspberry-Pi-Media-Player/">Instructables&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/setup-angle.jpg" alt="Player in its place">
+&lt;img src="https://www.bonnee.me/projects/audio-player/complete-off.jpg" alt="Complete box">&lt;/p>
+&lt;p>A minimalistic music player based on Raspberry Pi model B with HiFiBerry DAC and ATXRaspi power controller.
+I made this with the help (also economical) of my father.&lt;/p>
+&lt;p>Inspired by &lt;a href="http://www.hifiberry.com/forums/topic/small-media-player-with-squeezeliteslave/">this&lt;/a> and &lt;a href="http://www.crazy-audio.com/2014/03/a-standalone-streaming-media-device-based-on-raspberry-pi-and-hifiberry-dac/t">this&lt;/a>.&lt;/p>
+&lt;h1 id="parts">Parts&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/final-open.jpg" alt="Top view">&lt;/p>
+&lt;ol>
+&lt;li>A Raspberry Pi (I used the model B because I had one lying around the house);&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> A DAC (I reccomend HiFiberry DAC, it sounds good);&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> ATXRaspi power controller (to shut down and power up the Raspi easilly);&lt;/li>
+&lt;li>An enclosure (mine was 200mmx125mmx51mm externally);&lt;/li>
+&lt;li>A power supply (I used a MeanWell RS-15-5 5V 3A power supply from amazon);&lt;/li>
+&lt;li>A power switch (My version has a reed switch on top of the power led that toggles if I swipe a magnet on front of it);&lt;/li>
+&lt;li>Cables to wire all the devices to the rear panel (I added a HDMI cable to use this project as a media center);&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> an IR receiver;&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> A fuse.&lt;/li>
+&lt;/ol>
+&lt;p>Some links:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.hifiberry.com/dac/">HiFiBerry DAC&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://www.amazon.it/gp/product/B00MWQD43U?psc=1&amp;amp;redirect=true&amp;amp;ref_=oh_aui_detailpage_o04_s00">Power supply&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://www.ebay.it/itm/Aluminum-Amplifier-Cases-DAC-Enclosure-125-51-Xmm-DIY-Display-/231446512943?var&amp;amp;hash=item0&amp;amp;_uhb=1">Enclosure&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="first-prototype">First prototype&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/proto-top.jpg" alt="Prototype top view">
+&lt;img src="https://www.bonnee.me/projects/audio-player/proto-bottom.jpg" alt="Prototype bottom view">
+&lt;img src="https://www.bonnee.me/projects/audio-player/proto-working.jpg" alt="Prototype working">
+To test and setup the functionalities I made a prototype of the project using a plastic cover. Simple and effective.&lt;/p>
+&lt;h1 id="assembling-the-final-version">Assembling the final version&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/assembly-top.jpg" alt="Assembly top view">
+&lt;img src="https://www.bonnee.me/projects/audio-player/back-panel.jpg" alt="Back panel">&lt;/p>
+&lt;p>Assembling higly depends on the enclosure and on the components you choose.&lt;/p>
+&lt;p>I cut the rear panel with a dremel and the holes with a drill press. It isn&amp;rsquo;t beautiful but it works.
+The enclosure I chose has a rail to house a perforated board on which I placed all the components. There&amp;rsquo;s no electrical contact between the enclosure and the electronics.&lt;/p>
+&lt;h1 id="software">Software&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/software-smartphone.png" alt="Volumio on a smartphone">
+&lt;img src="https://www.bonnee.me/projects/audio-player/software-computer.png" alt="Volumio on a computer">&lt;/p>
+&lt;p>In the original project I wanted to use &lt;a href="http://www.runeaudio.com/">runeaudio&lt;/a> to power all the stuff but it was buggy and painful to set up (it took me hours to setup the IR receiver), so I decided to use &lt;a href="https://volumio.org/">Volumio&lt;/a> that is slower (raspbian based vs arch based) and the interface is not as good as runeaudio (not yet) but is more stable and reliable.&lt;/p>
+&lt;p>Both distros are very good to play webradios, spotify (only premium) and other streaming services, and music from network devices.&lt;/p>
+&lt;p>Changing distro can be easilly done because I left some space between the Raspi and the power supply to remove the sd card&lt;/p>
+&lt;p>&lt;a href="https://learn.adafruit.com/using-an-ir-remote-with-a-raspberry-pi-media-center/overview">Here&lt;/a> is a guide to set up an IR receiver.&lt;/p>
+&lt;h1 id="final-product">Final Product&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/complete-on.jpg" alt="">
+&lt;img src="https://www.bonnee.me/projects/audio-player/setup-close.jpg" alt="">
+&lt;img src="https://www.bonnee.me/projects/audio-player/front-close.jpg" alt="">
+&lt;img src="https://www.bonnee.me/projects/audio-player/setup-far.jpg" alt="">&lt;/p>
+&lt;p>Here are some pictures of it assembled and fully functioning. The audio quality is pleasant and it looks amazing. It only misses the IR receiver at the moment.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Micro on Bonnee's space</title><link>https://www.bonnee.me/tags/micro/</link><description>A personal blog for projects and thoughts (Micro)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 29 Nov 2020 09:50:13 +0100</lastBuildDate><atom:link href="https://www.bonnee.me/tags/micro/index.xml" rel="self" type="application/rss+xml"/><item><title>Two channel audio source switch with Wi-Fi</title><enclosure url="https://www.bonnee.me/projects/audio-switch/complete.jpg" type="image/jpg"/><link>https://www.bonnee.me/projects/audio-switch/</link><pubDate>Sun, 29 Nov 2020 09:50:13 +0100</pubDate><guid>https://www.bonnee.me/projects/audio-switch/</guid><description>&lt;p>The HiFi system in my livingroom is centered around an amplifier from the &amp;rsquo;80s. There are a few audio sources connected to it:&lt;/p>
+&lt;ol>
+&lt;li>A television&lt;/li>
+&lt;li>A Chromecast Audio&lt;/li>
+&lt;li>A record player&lt;/li>
+&lt;/ol>
+&lt;p>The amplifier is powered through a smart plug that, through the power of &lt;a href="https://www.home-assistant.io/">Home Assistant&lt;/a>, turns on whenever there is an active audio source and gets shut when there is none. Although nice and very convenient, this is not enough from keeping the listener from fiddling with the amplifier&amp;rsquo;s switches to choose the right audio source, since it gets toggled quite often between the TV and the Chromecast.&lt;/p>
+&lt;p>The ideal solution would be to automate the switch on the amplifier, but this requires some ugly mechanics around the switch, or an invasive internal modification. A simpler way to go is the use of a relay to phisically switch audio source when needed.
+To simplify the solution I decided to exclude the record player from the problem, since it is rarely used and it needs the listener to set the right volume on the amplifier anyway.&lt;/p>
+&lt;p>Surprisingly enough, I didn&amp;rsquo;t find any commercial audio switcher that meets my needs. There are plenty of audio switchers on Amazon, but none of them is controllable remotely. However, there are a few DIY solutions out there. At the end I decided to make my own, basing my solution on &lt;a href="https://www.hackster.io/govindanunni07/wifi-controlled-audio-source-selector-switch-wi-casss-d40ed3">Wi-CASSS&lt;/a>, a design made by &lt;a href="https://www.hackster.io/govindanunni">Govindan Unni&lt;/a>.&lt;/p>
+&lt;p>I chose to go with a relay-based design because it&amp;rsquo;s simple to make and gives the best audio insulation.&lt;/p>
+&lt;h2 id="bom">BOM&lt;/h2>
+&lt;h3 id="main-circuit">Main circuit&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Item&lt;/th>
+&lt;th>Qty&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>ESP8266 ESP-01s&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>OMRON G6S-2 (5V) signal relay&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Panel 3.5 mm Stereo jacks&lt;/td>
+&lt;td>3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>1N4007 diode&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Micro USB breakout board&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>5V to 3.3V AMS1117 breakout board&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>BC547 transistor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>1 kΩ resistor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>220 Ω resistor&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>5mm round LED&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10µf capacitor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>100µf capacitor&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="front-panel">Front panel&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Item&lt;/th>
+&lt;th>Qty&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>5mm round LED&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Momentary push button&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>After some shopping on AliExpress, the total cost amounted to almost 14 euros shipped (excluding LEDs and reistors which I already have) including many spare components, enough to make at least two complete circuits.&lt;/p>
+&lt;h2 id="schematics">Schematics&lt;/h2>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/original-schematic.jpg"
+alt="Original schematic."/>&lt;figcaption>
+&lt;p>Original schematic.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+I redesigned the relay driver circuit to include status LEDs for each input and also simplified it a bit. &lt;a href="https://bit.ly/wifiaudioswitch">Here&lt;/a> is a circuitjs link for the relay driver schematic. The ESP8266 power circuit has been maintained identical to Wi-CASSS&amp;rsquo;s schematic.
+&lt;figure>&lt;a href="https://bit.ly/wifiaudioswitch">&lt;img src="https://www.bonnee.me/projects/audio-switch/relay-driver.jpg"
+alt="Redesigned relay driver circuit."/>&lt;/a>&lt;figcaption>
+&lt;p>Redesigned relay driver circuit.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>I realized the circuit on perfboard since it&amp;rsquo;s quick and easy to make circuits out of.
+In the following picture you can see and early attempt at placing the components. This first try still used the original Wi-CASSS&amp;rsquo;s schematic (as you can see by the extra diode in the top left corner of the picture).
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/drawing.jpg"
+alt="Early components placement prototype."/>&lt;figcaption>
+&lt;p>Early components placement prototype.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;h2 id="enclosure">Enclosure&lt;/h2>
+&lt;p>I decided to design and 3D print my own enclosure. I didn&amp;rsquo;t want to have dangling wires coming out of it, so all external peripherals are detachable.&lt;/p>
+&lt;p>Power comes from a micro-usb breakout board, external connections to the front panels are handled by a small perfboard with pin headers. To hold all the connectors in place I designed the enclosure with supports and holes to handle that.
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/supports.jpg"
+alt="Supports in CAD vs IRL."/>&lt;figcaption>
+&lt;p>Supports in CAD vs IRL.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/usb-mount.jpg"
+alt="The micro-USB board is held in place with superglue and two copper pins (out of thick wire core)."/>&lt;figcaption>
+&lt;p>The micro-USB board is held in place with superglue and two copper pins (out of thick wire core).&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>After drilling the board, it&amp;rsquo;s ready to be fit into the case. The circuit is secured using 2 screws; It was supposed to be three but a few drilling errors prevented that. The board still feels firm anyway.
+A late addition to the circuit is the power LED, which is soldered to the 3.3V line, with its current-limiting resistor on the wire, since it wasn&amp;rsquo;t planned in my original design.
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/top-view.jpg"
+alt="Top view of the open enclosure"/>&lt;figcaption>
+&lt;p>It wont win any beauty contest, but it works.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/enclosure-open.jpg"
+alt="Front view of the box"/>&lt;figcaption>
+&lt;p>The print quality is far from perfect, but this box will not be visible anyway.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>The top cover is a thin sheet alluminium panel cut to dimension and screwed on top.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/complete.jpg"
+alt="Front view of the box"/>&lt;figcaption>
+&lt;p>Here it is in all its uglyness.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;h2 id="front-panel-1">Front Panel&lt;/h2>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel_cad.jpg"
+alt="Front panel CAD."/>&lt;figcaption>
+&lt;p>Front panel CAD.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel.jpg"
+alt="Front panel completed and mounted."/>&lt;figcaption>
+&lt;p>Front panel completed and mounted.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/button-bottom.jpg"
+alt="The button"/>&lt;figcaption>
+&lt;p>It&amp;rsquo;s incredible how cheap these buttons are while still feeling pretty good.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>The front panel is the local interface to the switch. It contains a momentary push-button to toggle input and two press-fitted LEDs that indicate the selected one.&lt;br>
+The button I used came from a PC front panel power button. Searching online for &amp;ldquo;pc power switch&amp;rdquo; I found it is produced by many manufacturers and can be found for just a few cents.
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel-back_cad.jpg"
+alt="Front panel&amp;amp;rsquo;s back side. Here you can see the button retainer clip."/>&lt;figcaption>
+&lt;p>Front panel&amp;rsquo;s back side. Here you can see the button retainer clip.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/panel-nocap.jpg"
+alt="Front panel without the keycap."/>&lt;figcaption>
+&lt;p>Front panel without the keycap.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;/p>
+&lt;p>I designed a keycap to go on the switch along with a mounting for the front panel. Since I am sort of a keyboard nerd, the black legend is actually 3D-printed by first printing the legend, which is just a single layer thick, then the filament is swapped while the bed is kept hot, and the rest of the cap is printed.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/projects/audio-switch/keycap.jpg"
+alt="Back of the keycap with stem and it&amp;amp;rsquo;s reinforcement. It&amp;amp;rsquo;s a miniature keyboard keycap basically. So cute."/>&lt;figcaption>
+&lt;p>Back of the keycap with stem and it&amp;rsquo;s reinforcement. It&amp;rsquo;s a miniature keyboard keycap basically. So cute.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;h2 id="software">Software&lt;/h2>
+&lt;p>Instead of reinventing the wheel writing custom ESP8266 firmware, I just flashed &lt;a href="https://tasmota.github.io/docs/">Tasmota&lt;/a> on the ESP-01 and linked it to &lt;a href="https://www.home-assistant.io/">Home Assistant&lt;/a> through MQTT.
+I then set up two simple automations to automatically toggle the inputs.&lt;/p>
+&lt;p>&lt;code>automations.yaml&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>alias: Switch to Chromecast Audio
+description: Switch audio source to Chromecast Audio
+trigger:
+- entity_id: binary_sensor.chromecast_audio_status
+platform: state
+to: &amp;#39;on&amp;#39;
+- entity_id: binary_sensor.tv_status
+platform: state
+to: &amp;#39;off&amp;#39;
+condition:
+- condition: state
+entity_id: binary_sensor.chromecast_audio_status
+state: &amp;#39;on&amp;#39;
+- condition: state # Don&amp;#39;t switch to Chromecast Audio if TV is on
+entity_id: binary_sensor.tv_status
+state: &amp;#39;off&amp;#39;
+action:
+- service: switch.turn_on
+entity_id: switch.audio_switch
+mode: single
+alias: Switch to TV
+description: Switch audio source to TV
+trigger:
+- entity_id: binary_sensor.chromecast_audio_status
+platform: state
+to: &amp;#39;off&amp;#39;
+- entity_id: binary_sensor.tv_status
+platform: state
+to: &amp;#39;on&amp;#39;
+condition:
+- condition: state
+entity_id: binary_sensor.tv_status
+state: &amp;#39;on&amp;#39;
+action:
+- service: switch.turn_off
+entity_id: switch.audio_switch
+- service: media_player.turn_off # Turn off other speaker if TV is on
+entity_id: media_player.other_speaker
+mode: single
+&lt;/code>&lt;/pre>&lt;h2 id="conclusions">Conclusions&lt;/h2>
+&lt;p>I&amp;rsquo;ve been using the switch for a couple of weeks without a single issue. Audio quality has not changed and it is very convenient to not touch the amplifier anymore. I will see how long the relay contacts hold up, but for the time being it&amp;rsquo;s working perfectly.&lt;/p>
+&lt;p>&lt;a href="https://github.com/Bonnee/wifi-audio-switch">Here&amp;rsquo;s&lt;/a> the repository with all the 3D models, pictures and schematics.&lt;/p></description></item><item><title>STM32 environment on Visual Studio Code</title><link>https://www.bonnee.me/blog/stm32-vscode/</link><pubDate>Sat, 02 Nov 2019 00:00:00 +0000</pubDate><guid>https://www.bonnee.me/blog/stm32-vscode/</guid><description>&lt;blockquote>
+&lt;p>Originally published on &lt;a href="https://gist.github.com/Bonnee/393c4be25d2e8620d9ec406073940d3a">GitHub Gists&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>This page will help you setup Visual Studio Code for programming and debugging STM32 boards using STM32CubeMX projects.&lt;/p>
+&lt;p>I tested this guide under Arch Linux and Ubuntu 18.04. If you get it to work under other setups please let me know so that I can update the steps with more info.&lt;/p>
+&lt;h2 id="warning">Warning&lt;/h2>
+&lt;p>If you were using STM32CubeIDE or SystemWorkbench before, you need to convert your projects in order for them to work. The conversion procedure is fully reversible.&lt;!-- raw HTML omitted -->
+Up until the time of writing this guide, it is not possible to use STM32CubeIDE and Visual Studio Code on the same project unless some configuration changes are made on CubeIDE.
+Besides that, it is recommended that every person that works on a project runs the same working environment.&lt;/p>
+&lt;h1 id="installation">Installation&lt;/h1>
+&lt;h2 id="steps">Steps&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#1-stm32cubemx">STM32CubeMX&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#2-gnu-arm-embedded-toolchain">GNU ARM Embedded Toolchain&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#3-make">Make&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#4-openocd">OpenOCD&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#5-visual-studio-code">Visual Studio Code&lt;/a>
+&lt;ol>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#51-cc-extension">C/C++ Extension&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#52-stm32-for-vscode-extension">stm32-for-vscode Extension&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="1-stm32cubemx">1. STM32CubeMX&lt;/h2>
+&lt;p>If you already have CubeMX installed, you can skip this step.&lt;/p>
+&lt;h4 id="arch-linux">Arch Linux&lt;/h4>
+&lt;p>Install &lt;code>stm32cubemx&lt;/code> from the &lt;a href="https://wiki.archlinux.org/index.php/Arch_User_Repository">AUR&lt;/a>. If you don&amp;rsquo;t have access to the AUR or you just don&amp;rsquo;t want to use it, follow the step below.&lt;/p>
+&lt;h4 id="inferior-operating-systems-windows-ubuntu-temple-os">Inferior operating systems (Windows, Ubuntu, Temple OS&amp;hellip;)&lt;/h4>
+&lt;p>Download the .zip from &lt;a href="https://www.st.com/en/development-tools/stm32cubemx.html">here&lt;/a> (you have to sign up to ST&amp;rsquo;s website) and install the right version for your OS.&lt;/p>
+&lt;hr>
+&lt;h2 id="2-gnu-arm-embedded-toolchain">2. GNU ARM Embedded Toolchain&lt;/h2>
+&lt;p>These are the tools needed to compile and debug the code.&lt;/p>
+&lt;h3 id="arch-linux-1">Arch Linux&lt;/h3>
+&lt;p>Install &lt;code>arm-none-eabi-gcc&lt;/code> &lt;code>arm-none-eabi-gdb&lt;/code> &lt;code>arm-none-eabi-newlib&lt;/code>.&lt;/p>
+&lt;h3 id="debianubuntu">Debian/Ubuntu&lt;/h3>
+&lt;p>Install &lt;code>gcc-arm-none-eabi&lt;/code> &lt;code>gdb-multiarch&lt;/code> &lt;code>libnewlib-arm-none-eabi&lt;/code>.&lt;/p>
+&lt;h3 id="windows">Windows&lt;/h3>
+&lt;p>Install the toolchain from &lt;a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">ARM&amp;rsquo;s website&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h2 id="3-make">3. Make&lt;/h2>
+&lt;h3 id="linux">Linux&lt;/h3>
+&lt;p>Install &lt;code>make&lt;/code> from your package manager.&lt;/p>
+&lt;h3 id="windows-1">Windows&lt;/h3>
+&lt;p>Install make from this &lt;a href="http://gnuwin32.sourceforge.net/packages/make.htm">this&lt;/a> page (updated in 2006 though&amp;hellip;).
+It should be possible to get the current version of make through &lt;a href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">WSL&lt;/a>, but I don&amp;rsquo;t have experience with it.&lt;/p>
+&lt;hr>
+&lt;h2 id="4-openocd">4. OpenOCD&lt;/h2>
+&lt;p>Open On-Chip Debugger is the interface between your computer and the programmer. It will take care of uploading the compiled software to the STM32 and during debug it will open the connection between the computer and the STM32.&lt;!-- raw HTML omitted -->&lt;/p>
+&lt;h3 id="linux-1">Linux&lt;/h3>
+&lt;p>Install &lt;code>openocd&lt;/code> from your package manager.&lt;/p>
+&lt;p>&lt;strong>Warning&lt;/strong>: for some newer microcontrollers and programmers you might need to build OpenOCD from sources, especially if your distro doesn&amp;rsquo;t ship the latest version.&lt;/p>
+&lt;h3 id="windows-2">Windows&lt;/h3>
+&lt;p>I received feedback about &lt;a href="https://xpack.github.io/openocd/install/">xPack OpenOCD&lt;/a> working fine with this setup.&lt;/p>
+&lt;hr>
+&lt;h2 id="5-visual-studio-code">5. Visual Studio Code&lt;/h2>
+&lt;p>The next steps aren&amp;rsquo;t really necessary to get the thing working. You could just use a shell and your favorite editor and you would have (almost) all the functionality of the complete setup. Visual Studio Code is just a pretty front-end.&lt;/p>
+&lt;h3 id="linux-2">Linux&lt;/h3>
+&lt;p>&lt;a href="https://code.visualstudio.com/docs/setup/linux">The official linux page&lt;/a> contains the instructions to install the latest version of VSCode on many distributions.&lt;/p>
+&lt;h3 id="windows-3">Windows&lt;/h3>
+&lt;p>Download and install the program from the &lt;a href="https://code.visualstudio.com/">official website&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h3 id="51-cc-extension">5.1. C/C++ Extension&lt;/h3>
+&lt;p>This extension will take care of intellisense, syntax highlighting and more.&lt;!-- raw HTML omitted -->
+Install &lt;a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">this&lt;/a> extension in Visual Studio Code.&lt;/p>
+&lt;h3 id="52-stm32-for-vscode-extension">5.2. stm32-for-vscode Extension&lt;/h3>
+&lt;p>Same as above, but with &lt;a href="https://marketplace.visualstudio.com/items?itemName=bmd.stm32-for-vscode">this&lt;/a> extension.&lt;/p>
+&lt;h1 id="configuration">Configuration&lt;/h1>
+&lt;h2 id="1-stm32cubemx-1">1. STM32CubeMX&lt;/h2>
+&lt;p>By default CubeMX generates projects in a format called EWARM. Unfortunately, EWARM is currently not supported by the VSCode extension, but the more generic Makefile structure is. In order to configure CubeMX to support VSCode you have to navigate to &lt;code>Project Manager-&amp;gt;Project-&amp;gt;Toolchain/IDE&lt;/code> and set it to Makefile.&lt;/p>
+&lt;p>If you don&amp;rsquo;t want your STM32Cube library path being spammed all over the makefile (if you need to share the project with someone else for example) you can tell CubeMX to copy the necessary files to the project&amp;rsquo;s directory and link the makefile to them. The option is located in &lt;code>Project Manger-&amp;gt;Code Generator-&amp;gt;STM32Cube MCU packages and embedded software packs&lt;/code>.&lt;/p>
+&lt;p>After CubeMX setup you can click on &lt;code>GENERATE CODE&lt;/code>; the new Makefile project structure should get created.&lt;/p>
+&lt;hr>
+&lt;h2 id="2-visual-studio">2. Visual Studio&lt;/h2>
+&lt;p>Using the &lt;code>Open folder&lt;/code> menu in Visual Studio Code, navigate to your project&amp;rsquo;s root folder and open it.
+Now open the command palette (&lt;code>Ctrl+Shift+P&lt;/code> or &lt;code>F1&lt;/code>) and run &lt;code>Build clean STM32 project&lt;/code>. A terminal should appear and you will see gcc (hopefully) building your project.&lt;/p>
+&lt;hr>
+&lt;h1 id="usage">Usage&lt;/h1>
+&lt;h2 id="compiling--flashing">Compiling &amp;amp; Flashing&lt;/h2>
+&lt;p>After you call &lt;code>Build STM32 Project&lt;/code> for the first time, stm32-for-vscode will create two custom tasks (that can be accessed by typing &lt;code>Ctrl+Shift+B&lt;/code>) to build your code and to flash it into the STM32 board.&lt;/p>
+&lt;h2 id="debugging">Debugging&lt;/h2>
+&lt;p>To debug the code just press &lt;code>F5&lt;/code> inside VSCode and the debugger will start automatically. Remember to stop the debugger before flashing new code.&lt;/p>
+&lt;h1 id="troubleshooting">Troubleshooting&lt;/h1>
+&lt;h3 id="error-libusb_open-failed-with-libusb_error_access-during-upload">&lt;code>Error: libusb_open() failed with LIBUSB_ERROR_ACCESS&lt;/code> during upload&lt;/h3>
+&lt;p>This happnes because you don&amp;rsquo;t have permission to open the serial device. In order to fix this you need to add your user to the group that owns the serial interface. To get the serial interface name you can run &lt;code>dmesg | grep tty&lt;/code> after plugging the STM32 in. Read the last line, you should see something like:&lt;/p>
+&lt;pre tabindex="0">&lt;code>cdc_acm 2-2:1.2: ttyACM0: USB ACM device
+&lt;/code>&lt;/pre>&lt;p>In this example &lt;code>ttyACM0&lt;/code> is the device name.&lt;!-- raw HTML omitted -->
+Now that you know the name you can get the owner by doing &lt;code>ls -l /dev/ttyACM0&lt;/code>. The output looks like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code>crw-rw---- 1 user group 4, 166 set 11 08:45 /dev/ttyACM0
+&lt;/code>&lt;/pre>&lt;p>&lt;code>group&lt;/code> indicates the group name.&lt;/p>
+&lt;p>Now you just need to add your user to the group by doing &lt;code>sudo usermod -aG group $USER&lt;/code>, substituting &lt;code>group&lt;/code> with the group name you have discovered above.&lt;/p>
+&lt;p>You are done. Log out of your account and log back in to apply the change.&lt;/p></description></item></channel></rss>

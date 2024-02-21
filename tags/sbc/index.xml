@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sbc on Bonnee's space</title><link>https://www.bonnee.me/tags/sbc/</link><description>A personal blog for projects and thoughts (Sbc)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 24 Dec 2020 22:35:17 +0100</lastBuildDate><atom:link href="https://www.bonnee.me/tags/sbc/index.xml" rel="self" type="application/rss+xml"/><item><title>How I back up my small servers</title><link>https://www.bonnee.me/blog/simple-backup/</link><pubDate>Thu, 24 Dec 2020 22:35:17 +0100</pubDate><guid>https://www.bonnee.me/blog/simple-backup/</guid><description>&lt;p>We all have heard about horror stories concerning SD card reliability when (mis)used as root disks on SBCs; With such a track record a good backup strategy should always be in place to prevent data loss and shorten downtime when a failure occurs. Fortunately I only had one MicroSD card casualty over the years, and the following backup method did its job right to recover from it.&lt;/p>
+&lt;p>I like to store backups on the local network because it is faster, easier to access and safer (I don&amp;rsquo;t encrypt my backups). As a backup server I rely on an ancient NAS I decommissioned a few yars ago because it was too slow for media storage (we&amp;rsquo;re talking single-core SPARC CPU with 1G of RAM). Although pretty old, the NAS was fitted with a pair of brand-new 2TB WD Reds so data should still be relatively safe. Storage is made available on the LAN through NFS with reasonable transfer speeds.&lt;/p>
+&lt;p>As for software I prefer dumping full disk images because it makes recovery such a breeze. Of course this approach is feasible only on easily-removable low-capacity media, like MicroSD cards or small SSDs.
+With this setup recovers I am able to recover a dead Raspberry Pi with a single shell command and about 15 minutes.
+If recovery time was to be absolutely crucial, one could setup something to automatically flash a spare MicroSD every time a new backup is made, reducing recovery to just a MicroSD card swap. The obvious drawback here is the wear out of the spare MicroSD that should then be replaced with a fresh one right after the recovery procedure is done. Still, the small cost of these kind of storage solutions makes this approach viable.&lt;/p>
+&lt;p>System images are handled by this &lt;a href="https://github.com/Bonnee/dotfiles/blob/master/.local/bin/backup.sh">bash script&lt;/a> I wrote back in &lt;a href="https://github.com/Bonnee/dotfiles/commit/cb2b95213ade35f177edd80ec0f5a0a1037d847e">March 2018&lt;/a>. The script has been running weekly on every server/raspi I own (7 at the time of writing this) and it does the following stuff:&lt;/p>
+&lt;ol>
+&lt;li>mount the output storage on a temporary directory&lt;/li>
+&lt;li>backup the local block device to output&lt;/li>
+&lt;li>clean up older backups&lt;/li>
+&lt;li>unmount the output and cleanup the temporary directory&lt;/li>
+&lt;/ol>
+&lt;p>After a few revisions of the script I added compression support via the &lt;code>-c&lt;/code> option. This helps the system scale to bigger block devices and improves backup speeds on slower networks or on slower machines. With multi-threaded gzip compression enabled I am able to backup my server&amp;rsquo;s 120G SSD in about 2 hours and a half with the NAS being the main bottleneck.&lt;/p>
+&lt;p>The current script&amp;rsquo;s feature set is:&lt;/p>
+&lt;ul>
+&lt;li>Optional compression (&lt;a href="https://github.com/facebook/zstd">zstd&lt;/a>, &lt;a href="https://www.zlib.net/pigz/">pigz&lt;/a>/gzip)&lt;/li>
+&lt;li>Support for local and remote outputs with automounting&lt;/li>
+&lt;li>Auto clean of older backups (it keeps the latest three backups)&lt;/li>
+&lt;li>Auto removal of backup image if the backup fails&lt;/li>
+&lt;/ul>
+&lt;p>I&amp;rsquo;m very satisfied with this whole procedure since it works reliably and runs on every linux box I throw it at.
+One future endeavour could be the experimentation of &lt;a href="https://en.wikipedia.org/wiki/Delta_encoding">delta&lt;/a> patches for speeding up the backup process. Basically, instead of taking a full disk image every time, only the bits that changed are taken and are then used to update the previous backup image. I fear this technique will bring excessive complexity though.&lt;/p></description></item><item><title>Raspberry Pi audio player</title><link>https://www.bonnee.me/projects/audio-player/</link><pubDate>Wed, 22 Jul 2015 00:00:00 +0000</pubDate><guid>https://www.bonnee.me/projects/audio-player/</guid><description>&lt;blockquote>
+&lt;p>Originally published on &lt;a href="https://www.instructables.com/Raspberry-Pi-Media-Player/">Instructables&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/setup-angle.jpg" alt="Player in its place">
+&lt;img src="https://www.bonnee.me/projects/audio-player/complete-off.jpg" alt="Complete box">&lt;/p>
+&lt;p>A minimalistic music player based on Raspberry Pi model B with HiFiBerry DAC and ATXRaspi power controller.
+I made this with the help (also economical) of my father.&lt;/p>
+&lt;p>Inspired by &lt;a href="http://www.hifiberry.com/forums/topic/small-media-player-with-squeezeliteslave/">this&lt;/a> and &lt;a href="http://www.crazy-audio.com/2014/03/a-standalone-streaming-media-device-based-on-raspberry-pi-and-hifiberry-dac/t">this&lt;/a>.&lt;/p>
+&lt;h1 id="parts">Parts&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/final-open.jpg" alt="Top view">&lt;/p>
+&lt;ol>
+&lt;li>A Raspberry Pi (I used the model B because I had one lying around the house);&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> A DAC (I reccomend HiFiberry DAC, it sounds good);&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> ATXRaspi power controller (to shut down and power up the Raspi easilly);&lt;/li>
+&lt;li>An enclosure (mine was 200mmx125mmx51mm externally);&lt;/li>
+&lt;li>A power supply (I used a MeanWell RS-15-5 5V 3A power supply from amazon);&lt;/li>
+&lt;li>A power switch (My version has a reed switch on top of the power led that toggles if I swipe a magnet on front of it);&lt;/li>
+&lt;li>Cables to wire all the devices to the rear panel (I added a HDMI cable to use this project as a media center);&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> an IR receiver;&lt;/li>
+&lt;li>&lt;em>(optional)&lt;/em> A fuse.&lt;/li>
+&lt;/ol>
+&lt;p>Some links:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.hifiberry.com/dac/">HiFiBerry DAC&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://www.amazon.it/gp/product/B00MWQD43U?psc=1&amp;amp;redirect=true&amp;amp;ref_=oh_aui_detailpage_o04_s00">Power supply&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://www.ebay.it/itm/Aluminum-Amplifier-Cases-DAC-Enclosure-125-51-Xmm-DIY-Display-/231446512943?var&amp;amp;hash=item0&amp;amp;_uhb=1">Enclosure&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="first-prototype">First prototype&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/proto-top.jpg" alt="Prototype top view">
+&lt;img src="https://www.bonnee.me/projects/audio-player/proto-bottom.jpg" alt="Prototype bottom view">
+&lt;img src="https://www.bonnee.me/projects/audio-player/proto-working.jpg" alt="Prototype working">
+To test and setup the functionalities I made a prototype of the project using a plastic cover. Simple and effective.&lt;/p>
+&lt;h1 id="assembling-the-final-version">Assembling the final version&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/assembly-top.jpg" alt="Assembly top view">
+&lt;img src="https://www.bonnee.me/projects/audio-player/back-panel.jpg" alt="Back panel">&lt;/p>
+&lt;p>Assembling higly depends on the enclosure and on the components you choose.&lt;/p>
+&lt;p>I cut the rear panel with a dremel and the holes with a drill press. It isn&amp;rsquo;t beautiful but it works.
+The enclosure I chose has a rail to house a perforated board on which I placed all the components. There&amp;rsquo;s no electrical contact between the enclosure and the electronics.&lt;/p>
+&lt;h1 id="software">Software&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/software-smartphone.png" alt="Volumio on a smartphone">
+&lt;img src="https://www.bonnee.me/projects/audio-player/software-computer.png" alt="Volumio on a computer">&lt;/p>
+&lt;p>In the original project I wanted to use &lt;a href="http://www.runeaudio.com/">runeaudio&lt;/a> to power all the stuff but it was buggy and painful to set up (it took me hours to setup the IR receiver), so I decided to use &lt;a href="https://volumio.org/">Volumio&lt;/a> that is slower (raspbian based vs arch based) and the interface is not as good as runeaudio (not yet) but is more stable and reliable.&lt;/p>
+&lt;p>Both distros are very good to play webradios, spotify (only premium) and other streaming services, and music from network devices.&lt;/p>
+&lt;p>Changing distro can be easilly done because I left some space between the Raspi and the power supply to remove the sd card&lt;/p>
+&lt;p>&lt;a href="https://learn.adafruit.com/using-an-ir-remote-with-a-raspberry-pi-media-center/overview">Here&lt;/a> is a guide to set up an IR receiver.&lt;/p>
+&lt;h1 id="final-product">Final Product&lt;/h1>
+&lt;p>&lt;img src="https://www.bonnee.me/projects/audio-player/complete-on.jpg" alt="">
+&lt;img src="https://www.bonnee.me/projects/audio-player/setup-close.jpg" alt="">
+&lt;img src="https://www.bonnee.me/projects/audio-player/front-close.jpg" alt="">
+&lt;img src="https://www.bonnee.me/projects/audio-player/setup-far.jpg" alt="">&lt;/p>
+&lt;p>Here are some pictures of it assembled and fully functioning. The audio quality is pleasant and it looks amazing. It only misses the IR receiver at the moment.&lt;/p></description></item></channel></rss>

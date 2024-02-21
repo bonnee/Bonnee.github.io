@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Bonnee's space</title><link>https://www.bonnee.me/categories/blog/</link><description>A personal blog for projects and thoughts (Blog)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 17 Jan 2022 21:44:05 +0100</lastBuildDate><atom:link href="https://www.bonnee.me/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>GP1095A01A VFD Display datasheet</title><link>https://www.bonnee.me/blog/gp1095a01a/</link><pubDate>Mon, 17 Jan 2022 21:44:05 +0100</pubDate><guid>https://www.bonnee.me/blog/gp1095a01a/</guid><description>&lt;p>My friend &lt;a href="https://simoneruffini.github.io/">Simone&lt;/a> found this gem of a dot-matrix &lt;a href="https://en.wikipedia.org/wiki/Vacuum_fluorescent_display">Vacuum Fluorescent Display&lt;/a> when tearing down his parents&amp;rsquo; old car.
+The only datasheet we could find was locked in a &lt;a href="https://www.digital-kaos.co.uk/forums/showthread.php/59335-repair-dashboard-scenic-2?p=4106838&amp;amp;viewfull=1#post4106838">shitty vBulletin forum&lt;/a> that not only required an account in order to open a damn file, but also demanded an user introduction post. So I decided to sign up so you don&amp;rsquo;t have to.&lt;/p>
+&lt;p>Fuck them, here&amp;rsquo;s the datasheet: &lt;a href="GP1095A01A.pdf">GP1095A01A.pdf&lt;/a>&lt;/p>
+&lt;p>Bonus &lt;a href="https://bit.ly/QuantumCAN">link&lt;/a> for all VFD junkies.&lt;/p></description></item><item><title>Thingiverse's Remix function is broken. Here's how to fix it</title><link>https://www.bonnee.me/blog/thingiverse-remixes-fix/</link><pubDate>Mon, 01 Feb 2021 12:13:00 +0100</pubDate><guid>https://www.bonnee.me/blog/thingiverse-remixes-fix/</guid><description>&lt;p>&lt;a href="https://www.thingiverse.com/">Thingiverse&lt;/a> is becoming abandonware, which is extremely sad since it hosts countless useful 3D designs that can&amp;rsquo;t be found anywhere else. Fortunately &lt;a href="https://www.reddit.com/r/DataHoarder/search?q=thingiverse&amp;amp;restrict_sr=1">some effort is being made&lt;/a> by the data hoarder community to backup Thingiverse in case it goes offline forever (or becomes even more broken).&lt;/p>
+&lt;p>If you&amp;rsquo;ve recently uploaded something on Thingiverse, you might have realized that one of the most important features of the site, remixes, is &lt;a href="https://www.reddit.com/r/thingiverse/search/?q=remix&amp;amp;restrict_sr=1">badly broken&lt;/a>. Together with the &lt;a href="https://www.reddit.com/r/thingiverse/search/?q=search&amp;amp;restrict_sr=1">terrible integrated search engine&lt;/a>, it becomes quite difficult to find stuff.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/box.png"
+alt="I&amp;amp;rsquo;m sure I&amp;amp;rsquo;ve seen boxes on Thingiverse before."/>&lt;figcaption>
+&lt;p>I&amp;rsquo;m sure I&amp;rsquo;ve seen boxes on Thingiverse before.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;p>If you try to upload a remixed design on thingiverse, you will find that it&amp;rsquo;s not possible to link the original source thing as a remix, or at least it doesn&amp;rsquo;t work for me, and many others. This is bad because your thing will not come up under the &amp;ldquo;Remixes&amp;rdquo; tab in the page of the original thing, making it less discoverable. Not to mention the missing attribution to the original work.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/3dbenchy.png"
+alt="Even 3DBenchy doesn&amp;amp;rsquo;t exist."/>&lt;figcaption>
+&lt;p>Even 3DBenchy doesn&amp;rsquo;t exist.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;h1 id="workarounds">Workarounds&lt;/h1>
+&lt;h2 id="0-upload-to-other-services">0. Upload to other services&lt;/h2>
+&lt;p>Try not to keep your designs on Thingiverse alone. There are &lt;a href="https://www.prusaprinters.org/">plenty&lt;/a> of &lt;a href="https://www.myminifactory.com">better&lt;/a> &lt;a href="https://cults3d.com">working&lt;/a> &lt;a href="https://pinshape.com/">alternative&lt;/a> &lt;a href="https://www.cgtrader.com/">platforms&lt;/a> to choose from.&lt;br>
+I keep all my designs in a git repository on &lt;a href="https://github.com/Bonnee/3d-models">GitHub&lt;/a> and I&amp;rsquo;m trying out &lt;a href="https://www.prusaprinters.org/social/56277-bonnee/prints">PrusaPrinters&lt;/a> as a Thingiverse replacement.&lt;/p>
+&lt;h3 id="1-use-the-remix-it-button">1. Use the &amp;ldquo;Remix It&amp;rdquo; button&lt;/h3>
+&lt;p>If you are creating a new thing just use the &amp;ldquo;Remix it&amp;rdquo; menu from the source&amp;rsquo;s page. The upload page should come up with the remix sources already filled in.&lt;/p>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/remix-it.png"
+alt="As simple as that."/>&lt;figcaption>
+&lt;p>As simple as that.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+This works well if you are uploading a new thing, but what if you already have an uploaded design and want to add a remix source to that? or what if you want to reference more than one remix source on your design? If this is your case, keep reading.&lt;/p>
+&lt;h3 id="2-html-hackery">2. HTML hackery&lt;/h3>
+&lt;p>You can edit the HTML code on Thingiverse&amp;rsquo;s edit page to manually include remixes. Here&amp;rsquo;s how.&lt;/p>
+&lt;blockquote>
+&lt;p>Screenshots are taken from Firefox, but the procedure on Chromium-based browsers is identical.&lt;/p>
+&lt;/blockquote>
+&lt;p>First, open the edit page of the thing you want to add remixes to. (create a new thing using &lt;a href="https://www.bonnee.me/blog/thingiverse-remixes-fix/#1-use-the-remix-it-button">workaround 1&lt;/a> or just edit an existing design). If the thing you&amp;rsquo;re editing doesen&amp;rsquo;t have a remix source, select &amp;ldquo;This is a Remix&amp;rdquo;.&lt;br>
+Now in the edit page you should see something like this:&lt;/p>
+&lt;p>&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/thing.png"
+alt="Just right click on the name."/>&lt;figcaption>
+&lt;p>Just right click on the name.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+The trick consists of manually inserting the HTML form entry for remix sources. To do that you can right-click inside the &amp;ldquo;Remix Source Files&amp;rdquo; box and select &amp;ldquo;Inspect Element&amp;rdquo; from the menu. You will now see the HTML code of the element you clicked on.&lt;br>
+If you don&amp;rsquo;t have any remixes to click on, just right click on the placeholder text that&amp;rsquo;s in its place.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/source.png"
+alt="You enetered the matrix now."/>&lt;figcaption>
+&lt;p>You enetered the matrix now.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;p>Now you need to look around for a line similar to this one:&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;input type=&amp;#34;hidden&amp;#34; name=&amp;#34;sources[xxxxxxx]&amp;#34; value=&amp;#34;xxxxxxx&amp;#34;&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>If you can&amp;rsquo;t find it don&amp;rsquo;t worry. Just select any line.&lt;br>
+right-click on it and select &amp;ldquo;Edit As HTML&amp;rdquo;. A textbox containing that line should appear.
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/html-edit.png"
+alt="Double check what you&amp;amp;rsquo;re doing here to avoid confusion later."/>&lt;figcaption>
+&lt;p>Double check what you&amp;rsquo;re doing here to avoid confusion later.&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+Duplicate the original line and substitute the numbers in the &lt;code>name&lt;/code> and &lt;code>value&lt;/code> properties with the thing id of the thing you want to remix. The thing id is the last part of the URL of the thing&amp;rsquo;s page.
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/thing-id.png"/>
+&lt;/figure>
+&lt;/p>
+&lt;p>When you&amp;rsquo;re done editing and everything looks good, click away from the textbox area to confirm the changes and go ahead and save your thing. Hopefully the right sources should be linked now and life will be good again.&lt;/p>
+&lt;figure>&lt;img src="https://www.bonnee.me/blog/thingiverse-remixes-fix/done.png"
+alt="Done!"/>&lt;figcaption>
+&lt;p>Done!&lt;/p>
+&lt;/figcaption>
+&lt;/figure>
+&lt;p>You can repeat these steps indefinitely to add as many remixes as you want.&lt;/p></description></item><item><title>How I back up my small servers</title><link>https://www.bonnee.me/blog/simple-backup/</link><pubDate>Thu, 24 Dec 2020 22:35:17 +0100</pubDate><guid>https://www.bonnee.me/blog/simple-backup/</guid><description>&lt;p>We all have heard about horror stories concerning SD card reliability when (mis)used as root disks on SBCs; With such a track record a good backup strategy should always be in place to prevent data loss and shorten downtime when a failure occurs. Fortunately I only had one MicroSD card casualty over the years, and the following backup method did its job right to recover from it.&lt;/p>
+&lt;p>I like to store backups on the local network because it is faster, easier to access and safer (I don&amp;rsquo;t encrypt my backups). As a backup server I rely on an ancient NAS I decommissioned a few yars ago because it was too slow for media storage (we&amp;rsquo;re talking single-core SPARC CPU with 1G of RAM). Although pretty old, the NAS was fitted with a pair of brand-new 2TB WD Reds so data should still be relatively safe. Storage is made available on the LAN through NFS with reasonable transfer speeds.&lt;/p>
+&lt;p>As for software I prefer dumping full disk images because it makes recovery such a breeze. Of course this approach is feasible only on easily-removable low-capacity media, like MicroSD cards or small SSDs.
+With this setup recovers I am able to recover a dead Raspberry Pi with a single shell command and about 15 minutes.
+If recovery time was to be absolutely crucial, one could setup something to automatically flash a spare MicroSD every time a new backup is made, reducing recovery to just a MicroSD card swap. The obvious drawback here is the wear out of the spare MicroSD that should then be replaced with a fresh one right after the recovery procedure is done. Still, the small cost of these kind of storage solutions makes this approach viable.&lt;/p>
+&lt;p>System images are handled by this &lt;a href="https://github.com/Bonnee/dotfiles/blob/master/.local/bin/backup.sh">bash script&lt;/a> I wrote back in &lt;a href="https://github.com/Bonnee/dotfiles/commit/cb2b95213ade35f177edd80ec0f5a0a1037d847e">March 2018&lt;/a>. The script has been running weekly on every server/raspi I own (7 at the time of writing this) and it does the following stuff:&lt;/p>
+&lt;ol>
+&lt;li>mount the output storage on a temporary directory&lt;/li>
+&lt;li>backup the local block device to output&lt;/li>
+&lt;li>clean up older backups&lt;/li>
+&lt;li>unmount the output and cleanup the temporary directory&lt;/li>
+&lt;/ol>
+&lt;p>After a few revisions of the script I added compression support via the &lt;code>-c&lt;/code> option. This helps the system scale to bigger block devices and improves backup speeds on slower networks or on slower machines. With multi-threaded gzip compression enabled I am able to backup my server&amp;rsquo;s 120G SSD in about 2 hours and a half with the NAS being the main bottleneck.&lt;/p>
+&lt;p>The current script&amp;rsquo;s feature set is:&lt;/p>
+&lt;ul>
+&lt;li>Optional compression (&lt;a href="https://github.com/facebook/zstd">zstd&lt;/a>, &lt;a href="https://www.zlib.net/pigz/">pigz&lt;/a>/gzip)&lt;/li>
+&lt;li>Support for local and remote outputs with automounting&lt;/li>
+&lt;li>Auto clean of older backups (it keeps the latest three backups)&lt;/li>
+&lt;li>Auto removal of backup image if the backup fails&lt;/li>
+&lt;/ul>
+&lt;p>I&amp;rsquo;m very satisfied with this whole procedure since it works reliably and runs on every linux box I throw it at.
+One future endeavour could be the experimentation of &lt;a href="https://en.wikipedia.org/wiki/Delta_encoding">delta&lt;/a> patches for speeding up the backup process. Basically, instead of taking a full disk image every time, only the bits that changed are taken and are then used to update the previous backup image. I fear this technique will bring excessive complexity though.&lt;/p></description></item><item><title>Blog!</title><link>https://www.bonnee.me/blog/blog/</link><pubDate>Sat, 21 Nov 2020 22:39:01 +0100</pubDate><guid>https://www.bonnee.me/blog/blog/</guid><description>&lt;p>That&amp;rsquo;s my first blog post! I plan on doing montly journals on what I do, and maybe add some other content as I go.&lt;/p>
+&lt;p>Expect me write about progress made with E-Agle TRT, my work/homelab, random stuff about linux and whatever else comes to my mind.&lt;/p></description></item><item><title>STM32 environment on Visual Studio Code</title><link>https://www.bonnee.me/blog/stm32-vscode/</link><pubDate>Sat, 02 Nov 2019 00:00:00 +0000</pubDate><guid>https://www.bonnee.me/blog/stm32-vscode/</guid><description>&lt;blockquote>
+&lt;p>Originally published on &lt;a href="https://gist.github.com/Bonnee/393c4be25d2e8620d9ec406073940d3a">GitHub Gists&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>This page will help you setup Visual Studio Code for programming and debugging STM32 boards using STM32CubeMX projects.&lt;/p>
+&lt;p>I tested this guide under Arch Linux and Ubuntu 18.04. If you get it to work under other setups please let me know so that I can update the steps with more info.&lt;/p>
+&lt;h2 id="warning">Warning&lt;/h2>
+&lt;p>If you were using STM32CubeIDE or SystemWorkbench before, you need to convert your projects in order for them to work. The conversion procedure is fully reversible.&lt;!-- raw HTML omitted -->
+Up until the time of writing this guide, it is not possible to use STM32CubeIDE and Visual Studio Code on the same project unless some configuration changes are made on CubeIDE.
+Besides that, it is recommended that every person that works on a project runs the same working environment.&lt;/p>
+&lt;h1 id="installation">Installation&lt;/h1>
+&lt;h2 id="steps">Steps&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#1-stm32cubemx">STM32CubeMX&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#2-gnu-arm-embedded-toolchain">GNU ARM Embedded Toolchain&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#3-make">Make&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#4-openocd">OpenOCD&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#5-visual-studio-code">Visual Studio Code&lt;/a>
+&lt;ol>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#51-cc-extension">C/C++ Extension&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.bonnee.me/blog/stm32-vscode/#52-stm32-for-vscode-extension">stm32-for-vscode Extension&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="1-stm32cubemx">1. STM32CubeMX&lt;/h2>
+&lt;p>If you already have CubeMX installed, you can skip this step.&lt;/p>
+&lt;h4 id="arch-linux">Arch Linux&lt;/h4>
+&lt;p>Install &lt;code>stm32cubemx&lt;/code> from the &lt;a href="https://wiki.archlinux.org/index.php/Arch_User_Repository">AUR&lt;/a>. If you don&amp;rsquo;t have access to the AUR or you just don&amp;rsquo;t want to use it, follow the step below.&lt;/p>
+&lt;h4 id="inferior-operating-systems-windows-ubuntu-temple-os">Inferior operating systems (Windows, Ubuntu, Temple OS&amp;hellip;)&lt;/h4>
+&lt;p>Download the .zip from &lt;a href="https://www.st.com/en/development-tools/stm32cubemx.html">here&lt;/a> (you have to sign up to ST&amp;rsquo;s website) and install the right version for your OS.&lt;/p>
+&lt;hr>
+&lt;h2 id="2-gnu-arm-embedded-toolchain">2. GNU ARM Embedded Toolchain&lt;/h2>
+&lt;p>These are the tools needed to compile and debug the code.&lt;/p>
+&lt;h3 id="arch-linux-1">Arch Linux&lt;/h3>
+&lt;p>Install &lt;code>arm-none-eabi-gcc&lt;/code> &lt;code>arm-none-eabi-gdb&lt;/code> &lt;code>arm-none-eabi-newlib&lt;/code>.&lt;/p>
+&lt;h3 id="debianubuntu">Debian/Ubuntu&lt;/h3>
+&lt;p>Install &lt;code>gcc-arm-none-eabi&lt;/code> &lt;code>gdb-multiarch&lt;/code> &lt;code>libnewlib-arm-none-eabi&lt;/code>.&lt;/p>
+&lt;h3 id="windows">Windows&lt;/h3>
+&lt;p>Install the toolchain from &lt;a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">ARM&amp;rsquo;s website&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h2 id="3-make">3. Make&lt;/h2>
+&lt;h3 id="linux">Linux&lt;/h3>
+&lt;p>Install &lt;code>make&lt;/code> from your package manager.&lt;/p>
+&lt;h3 id="windows-1">Windows&lt;/h3>
+&lt;p>Install make from this &lt;a href="http://gnuwin32.sourceforge.net/packages/make.htm">this&lt;/a> page (updated in 2006 though&amp;hellip;).
+It should be possible to get the current version of make through &lt;a href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">WSL&lt;/a>, but I don&amp;rsquo;t have experience with it.&lt;/p>
+&lt;hr>
+&lt;h2 id="4-openocd">4. OpenOCD&lt;/h2>
+&lt;p>Open On-Chip Debugger is the interface between your computer and the programmer. It will take care of uploading the compiled software to the STM32 and during debug it will open the connection between the computer and the STM32.&lt;!-- raw HTML omitted -->&lt;/p>
+&lt;h3 id="linux-1">Linux&lt;/h3>
+&lt;p>Install &lt;code>openocd&lt;/code> from your package manager.&lt;/p>
+&lt;p>&lt;strong>Warning&lt;/strong>: for some newer microcontrollers and programmers you might need to build OpenOCD from sources, especially if your distro doesn&amp;rsquo;t ship the latest version.&lt;/p>
+&lt;h3 id="windows-2">Windows&lt;/h3>
+&lt;p>I received feedback about &lt;a href="https://xpack.github.io/openocd/install/">xPack OpenOCD&lt;/a> working fine with this setup.&lt;/p>
+&lt;hr>
+&lt;h2 id="5-visual-studio-code">5. Visual Studio Code&lt;/h2>
+&lt;p>The next steps aren&amp;rsquo;t really necessary to get the thing working. You could just use a shell and your favorite editor and you would have (almost) all the functionality of the complete setup. Visual Studio Code is just a pretty front-end.&lt;/p>
+&lt;h3 id="linux-2">Linux&lt;/h3>
+&lt;p>&lt;a href="https://code.visualstudio.com/docs/setup/linux">The official linux page&lt;/a> contains the instructions to install the latest version of VSCode on many distributions.&lt;/p>
+&lt;h3 id="windows-3">Windows&lt;/h3>
+&lt;p>Download and install the program from the &lt;a href="https://code.visualstudio.com/">official website&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h3 id="51-cc-extension">5.1. C/C++ Extension&lt;/h3>
+&lt;p>This extension will take care of intellisense, syntax highlighting and more.&lt;!-- raw HTML omitted -->
+Install &lt;a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">this&lt;/a> extension in Visual Studio Code.&lt;/p>
+&lt;h3 id="52-stm32-for-vscode-extension">5.2. stm32-for-vscode Extension&lt;/h3>
+&lt;p>Same as above, but with &lt;a href="https://marketplace.visualstudio.com/items?itemName=bmd.stm32-for-vscode">this&lt;/a> extension.&lt;/p>
+&lt;h1 id="configuration">Configuration&lt;/h1>
+&lt;h2 id="1-stm32cubemx-1">1. STM32CubeMX&lt;/h2>
+&lt;p>By default CubeMX generates projects in a format called EWARM. Unfortunately, EWARM is currently not supported by the VSCode extension, but the more generic Makefile structure is. In order to configure CubeMX to support VSCode you have to navigate to &lt;code>Project Manager-&amp;gt;Project-&amp;gt;Toolchain/IDE&lt;/code> and set it to Makefile.&lt;/p>
+&lt;p>If you don&amp;rsquo;t want your STM32Cube library path being spammed all over the makefile (if you need to share the project with someone else for example) you can tell CubeMX to copy the necessary files to the project&amp;rsquo;s directory and link the makefile to them. The option is located in &lt;code>Project Manger-&amp;gt;Code Generator-&amp;gt;STM32Cube MCU packages and embedded software packs&lt;/code>.&lt;/p>
+&lt;p>After CubeMX setup you can click on &lt;code>GENERATE CODE&lt;/code>; the new Makefile project structure should get created.&lt;/p>
+&lt;hr>
+&lt;h2 id="2-visual-studio">2. Visual Studio&lt;/h2>
+&lt;p>Using the &lt;code>Open folder&lt;/code> menu in Visual Studio Code, navigate to your project&amp;rsquo;s root folder and open it.
+Now open the command palette (&lt;code>Ctrl+Shift+P&lt;/code> or &lt;code>F1&lt;/code>) and run &lt;code>Build clean STM32 project&lt;/code>. A terminal should appear and you will see gcc (hopefully) building your project.&lt;/p>
+&lt;hr>
+&lt;h1 id="usage">Usage&lt;/h1>
+&lt;h2 id="compiling--flashing">Compiling &amp;amp; Flashing&lt;/h2>
+&lt;p>After you call &lt;code>Build STM32 Project&lt;/code> for the first time, stm32-for-vscode will create two custom tasks (that can be accessed by typing &lt;code>Ctrl+Shift+B&lt;/code>) to build your code and to flash it into the STM32 board.&lt;/p>
+&lt;h2 id="debugging">Debugging&lt;/h2>
+&lt;p>To debug the code just press &lt;code>F5&lt;/code> inside VSCode and the debugger will start automatically. Remember to stop the debugger before flashing new code.&lt;/p>
+&lt;h1 id="troubleshooting">Troubleshooting&lt;/h1>
+&lt;h3 id="error-libusb_open-failed-with-libusb_error_access-during-upload">&lt;code>Error: libusb_open() failed with LIBUSB_ERROR_ACCESS&lt;/code> during upload&lt;/h3>
+&lt;p>This happnes because you don&amp;rsquo;t have permission to open the serial device. In order to fix this you need to add your user to the group that owns the serial interface. To get the serial interface name you can run &lt;code>dmesg | grep tty&lt;/code> after plugging the STM32 in. Read the last line, you should see something like:&lt;/p>
+&lt;pre tabindex="0">&lt;code>cdc_acm 2-2:1.2: ttyACM0: USB ACM device
+&lt;/code>&lt;/pre>&lt;p>In this example &lt;code>ttyACM0&lt;/code> is the device name.&lt;!-- raw HTML omitted -->
+Now that you know the name you can get the owner by doing &lt;code>ls -l /dev/ttyACM0&lt;/code>. The output looks like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code>crw-rw---- 1 user group 4, 166 set 11 08:45 /dev/ttyACM0
+&lt;/code>&lt;/pre>&lt;p>&lt;code>group&lt;/code> indicates the group name.&lt;/p>
+&lt;p>Now you just need to add your user to the group by doing &lt;code>sudo usermod -aG group $USER&lt;/code>, substituting &lt;code>group&lt;/code> with the group name you have discovered above.&lt;/p>
+&lt;p>You are done. Log out of your account and log back in to apply the change.&lt;/p></description></item></channel></rss>
